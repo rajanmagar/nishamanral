@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arista Vault — Wallet Bot | Portfolio 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #0060CE;
+      --yellow: #FFEF28;
+      --dark:   #202020;
+      --ink:    #1c1c1c;
+      --card-radius: 48px;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    img { display: block; }
+
+    /* Film-grain overlay over the whole page (design uses a Figma noise filter) */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0.11;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════════════════════════════════════
+       TOP NAV — same yellow bar as home page
+    ══════════════════════════════════════════ */
+    .top-nav {
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2.5rem;
+      margin: 40px 40px 0 40px;
+      border-radius: 16px;
+    }
+
+    .top-nav .logo img { height: 30px; display: block; }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .top-nav .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .top-nav .btn-contact {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT HELPERS
+    ══════════════════════════════════════════ */
+    .wrap {
+      width: calc(100% - 80px);
+      max-width: 1376px;
+      margin-inline: auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       HERO — wallet on circuit board
+    ══════════════════════════════════════════ */
+    .hero-card { margin-top: 70px; }
+
+    .hero-card img {
+      width: 100%;
+      aspect-ratio: 1376 / 774;
+      object-fit: cover;
+      border-radius: 34px;
+    }
+
+    /* ══════════════════════════════════════════
+       WHAT IS WALLET BOT?
+    ══════════════════════════════════════════ */
+    .what-is {
+      margin-top: 150px;
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .what-is h1 {
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #000;
+      line-height: 1.15;
+    }
+
+    .what-is h1 .line-light {
+      display: block;
+      font-weight: 500;
+      font-size: clamp(2rem, 3.6vw, 3.4rem);
+    }
+
+    .what-is h1 .line-bold {
+      display: block;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+    }
+
+    .what-is p {
+      font-size: clamp(0.85rem, 1.02vw, 0.98rem);
+      line-height: 1.55;
+      padding-top: 0.3em;
+      white-space: pre-line;
+    }
+
+    /* ══════════════════════════════════════════
+       CHALLENGE / OUTCOME / DELIVERED / YEAR
+    ══════════════════════════════════════════ */
+    .info-grid {
+      margin-top: 130px;
+      padding: 0 3.5%;
+      display: grid;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.5fr;
+      gap: clamp(2rem, 4vw, 60px);
+    }
+
+    .info-grid h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
+      color: #000;
+      margin-bottom: 1.1rem;
+    }
+
+    .info-grid p, .info-grid li {
+      font-size: clamp(0.74rem, 0.85vw, 0.82rem);
+      line-height: 1.6;
+      color: #3d3d3d;
+    }
+
+    .info-grid ul { list-style: none; }
+
+    /* ══════════════════════════════════════════
+       DARK CARDS (shared)
+    ══════════════════════════════════════════ */
+    .dark-card {
+      background: var(--dark);
+      border-radius: var(--card-radius);
+      color: #fff;
+    }
+
+    .dark-card h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 2.9vw, 2.75rem);
+      line-height: 1.15;
+      color: #fff;
+    }
+
+    .dark-card p {
+      font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+      line-height: 1.6;
+      color: #d0d0d0;
+      white-space: pre-line;
+    }
+
+    /* ── Social media card ── */
+    .social-card {
+      margin-top: 170px;
+      aspect-ratio: 1376 / 704;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3% 12% 3% 15.5%;
+    }
+
+    .social-card .phone-btn {
+      width: 24.5%;
+      max-height: 92%;
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.35s ease;
+    }
+
+    .social-card .phone-btn:hover { transform: scale(1.04); }
+
+    .social-card .phone {
+      display: block;
+      width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .social-card .social-text {
+      width: 46%;
+    }
+
+    .social-card .social-text p { margin-top: 2.2rem; }
+
+    /* ── Photography card ── */
+    .photo-card-section {
+      margin-top: 70px;
+      aspect-ratio: 1376 / 704;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 3% 8.5% 3% 12%;
+    }
+
+    .photo-text { width: 30%; }
+
+    .photo-text h2 { text-align: left; }
+
+    .photo-text p {
+      margin-top: 2rem;
+      text-align: right;
+    }
+
+    .photo-cover-btn {
+      border: none;
+      background: none;
+      padding: 0;
+      width: 36%;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-cover-btn:hover { transform: scale(1.025); }
+    .photo-cover-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+
+    .photo-cover-btn img {
+      width: 100%;
+      height: auto;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    /* ── Image manipulation card ── */
+    .manip-card {
+      margin-top: 70px;
+      padding: 8% 0 7%;
+      overflow: hidden;
+    }
+
+    .manip-head {
+      padding: 0 8.4%;
+    }
+
+    .manip-head p {
+      margin-top: 2.2rem;
+      max-width: 74%;
+    }
+
+    .manip-strip {
+      margin-top: 3.2%;
+      display: flex;
+      gap: 15px;
+      padding: 0 4.5%;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+
+    .manip-strip::-webkit-scrollbar { display: none; }
+    .manip-strip.dragging { cursor: grabbing; }
+
+    .manip-strip img {
+      height: clamp(200px, 33vw, 511px);
+      width: auto;
+      border-radius: 33px;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER — credits + other projects
+    ══════════════════════════════════════════ */
+    .credits-footer {
+      margin-top: 100px;
+      background: var(--blue);
+      padding-top: 80px;
+    }
+
+    .credits-footer h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 2.7vw, 2.6rem);
+      color: var(--yellow);
+    }
+
+    .credits-footer .credits-body {
+      margin-top: 28px;
+      max-width: 830px;
+      color: #fff;
+      font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+      line-height: 1.65;
+    }
+
+    .view-another {
+      display: inline-block;
+      margin-top: 56px;
+      color: var(--yellow);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .project-rows {
+      margin-top: 26px;
+      list-style: none;
+    }
+
+    .project-rows a {
+      display: block;
+      border-top: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 42px 0 42px 14px;
+      color: #fff;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3.4vw, 3.25rem);
+      line-height: 1.1;
+      text-decoration: none;
+      transition: padding-left 0.3s ease, color 0.3s ease;
+    }
+
+    .project-rows a:hover {
+      padding-left: 34px;
+      color: var(--yellow);
+    }
+
+    /* ══════════════════════════════════════════
+       PHOTOGRAPHY FLIPBOOK MODAL (same as home page)
+    ══════════════════════════════════════════ */
+    .book-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 15, 15, 0.72);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .book-modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .book-board {
+      position: relative;
+      width: calc(100vw - 160px);
+      height: calc(100vh - 160px);
+      border-radius: 32px;
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+      padding: 4vh 4vw 2.5vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2vh;
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .book-modal.open .book-board { transform: scale(1); }
+
+    .photo-board { background: url('photography/wood-texture-light.jpg') center / cover; }
+
+    .book-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book {
+      position: relative;
+      height: 100%;
+      max-width: 100%;
+      aspect-ratio: 1016 / 579;
+      perspective: 2600px;
+    }
+
+    .page-slot {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+    }
+
+    .slot-left  { left: 0; }
+    .slot-right { left: 50%; }
+    .page-slot.empty { visibility: hidden; }
+
+    .page-slot > img,
+    .flip-face img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .page-slot > .spine-shadow {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 7%;
+      pointer-events: none;
+    }
+
+    .slot-left > .spine-shadow {
+      right: 0;
+      background: linear-gradient(to left, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .slot-right > .spine-shadow {
+      left: 0;
+      background: linear-gradient(to right, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .flip-zone {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .flip-zone:focus-visible { outline: 3px solid var(--yellow); }
+
+    .flipper {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      display: none;
+      z-index: 10;
+    }
+
+    .flipper.flip-forward {
+      display: block;
+      left: 50%;
+      transform-origin: left center;
+      animation: flipFwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    .flipper.flip-backward {
+      display: block;
+      left: 0;
+      transform-origin: right center;
+      animation: flipBwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    @keyframes flipFwd { from { transform: rotateY(0); } to { transform: rotateY(-180deg); } }
+    @keyframes flipBwd { from { transform: rotateY(0); } to { transform: rotateY(180deg); } }
+
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-back { transform: rotateY(180deg); }
+
+    .flip-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0) 60%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .flipper.flip-forward .flip-shade,
+    .flipper.flip-backward .flip-shade {
+      animation: flipShade 750ms ease-in-out forwards;
+    }
+
+    @keyframes flipShade {
+      0%   { opacity: 0; }
+      50%  { opacity: 0.35; }
+      100% { opacity: 0; }
+    }
+
+    .menu-close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 20;
+      transition: background 0.2s ease;
+    }
+
+    .menu-close:hover { background: rgba(0, 0, 0, 0.7); }
+
+    .menu-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .menu-nav button {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-nav button:hover:not(:disabled) { background: rgba(0, 0, 0, 0.7); }
+    .menu-nav button:disabled { opacity: 0.35; cursor: default; }
+
+    .menu-counter {
+      color: #fff;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      min-width: 3.2rem;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    /* ══════════════════════════════════════════
+       INSTAGRAM POPUP (social-card phone)
+       Geometry in % of the 402×874 exported screens:
+       post image band y 152–554, carousel dots row ~y 569,
+       bottom nav y 812–874, profile grid starts y 479.
+    ══════════════════════════════════════════ */
+    .insta-modal { z-index: 520; }
+    .insta-modal [hidden] { display: none !important; }
+
+    .insta-phone {
+      position: relative;
+      height: min(86vh, 200vw);
+      aspect-ratio: 402 / 874;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .insta-modal.open .insta-phone { transform: scale(1); }
+
+    .ig-feed {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: none;
+    }
+
+    .ig-feed::-webkit-scrollbar { display: none; }
+
+    .ig-header { display: block; width: 100%; }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      padding-bottom: 15.5%; /* keep last rows reachable above the pinned nav bar */
+    }
+
+    .ig-cell {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      padding: 0;
+      border: none;
+      background: #eee;
+      cursor: pointer;
+    }
+
+    .ig-cell img {
+      display: block;
+      width: 100%;
+      transform: translateY(-17.39%); /* slide the post's image band into view */
+    }
+
+    .ig-nav {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      z-index: 4;
+    }
+
+    .ig-post {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      background-color: #fff;
+      background-size: 100% auto;
+      background-position: top center;
+      background-repeat: no-repeat;
+    }
+
+    .ig-back {
+      position: absolute;
+      top: 5%;
+      left: 0;
+      width: 18%;
+      height: 6%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .ig-carousel {
+      position: absolute;
+      top: 17.39%;
+      left: 0;
+      width: 100%;
+      height: 46%;
+      overflow: hidden;
+    }
+
+    .ig-car-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.35s ease;
+    }
+
+    .ig-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+    }
+
+    .ig-slide1 {
+      background-size: 100% auto;
+      background-position: 0 32.2%; /* = 152 / (874 − 402): the image band of the full screen */
+    }
+
+    .ig-slide2 { background-size: 100% 100%; }
+
+    .ig-car-prev,
+    .ig-car-next {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 30%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .ig-car-prev { left: 0; }
+    .ig-car-next { right: 0; }
+
+    .ig-car-prev::after {
+      content: '\2039';
+      position: absolute;
+      left: 8%;
+      top: 50%;
+      width: 24px;
+      height: 24px;
+      margin-top: -12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.65);
+      color: #333;
+      font-size: 19px;
+      line-height: 22px;
+      display: none;
+    }
+
+    .ig-carousel.at-2 .ig-car-prev::after { display: block; }
+
+    .ig-dotcover {
+      position: absolute;
+      top: 63.4%;
+      left: 0;
+      width: 100%;
+      height: 3.2%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .ig-dotcover span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #d9d9d9;
+    }
+
+    .ig-dotcover span.active { background: #708dff; }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 760px) {
+      .top-nav { margin: 16px 16px 0; padding: 0.65rem 1.2rem; }
+      .top-nav .nav-links { gap: 1.2rem; }
+      .wrap { width: calc(100% - 32px); }
+      .hero-card { margin-top: 32px; }
+      .hero-card img { border-radius: 22px; }
+      .what-is { grid-template-columns: 1fr; gap: 1.4rem; margin-top: 64px; }
+      .info-grid { grid-template-columns: 1fr 1fr; margin-top: 56px; padding: 0; }
+      .dark-card { border-radius: 26px; }
+      .social-card {
+        margin-top: 80px;
+        aspect-ratio: auto;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 36px 24px;
+      }
+      .social-card .phone-btn { width: 62%; max-height: none; }
+      .social-card .social-text { width: 100%; }
+      .photo-card-section {
+        aspect-ratio: auto;
+        flex-direction: column-reverse;
+        gap: 2rem;
+        padding: 36px 24px;
+      }
+      .photo-cover-btn { width: 72%; }
+      .photo-text { width: 100%; }
+      .photo-text p { text-align: left; }
+      .manip-card { padding: 36px 0; }
+      .manip-head { padding: 0 24px; }
+      .manip-head p { max-width: 100%; }
+      .manip-strip { padding: 0 24px; gap: 10px; }
+      .manip-strip img { border-radius: 16px; }
+      .credits-footer { padding-top: 48px; margin-top: 64px; }
+      .project-rows a { padding: 26px 0 26px 6px; }
+      .book-board {
+        width: calc(100vw - 32px);
+        height: calc(100vh - 32px);
+        padding: 3vh 3vw 2.5vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <a class="logo" href="index.html"><img src="logo.svg" alt="Logo" /></a>
+  <div class="nav-links">
+    <a href="index.html">About</a>
+    <a href="index.html#workSection">Work</a>
+    <a href="index.html#contactSection" class="btn-contact">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── HERO ── -->
+  <section class="hero-card reveal">
+    <img src="arista-assets/hero-wallet.jpg" alt="Wallet Bot smart wallet on a circuit board surrounded by electronic components" />
+  </section>
+
+  <!-- ── WHAT IS WALLET BOT? ── -->
+  <section class="what-is reveal">
+    <h1>
+      <span class="line-light">What is</span>
+      <span class="line-bold">Wallet Bot?</span>
+    </h1>
+    <p>Wallet-bot is a new age wallet with tech enabled features like anti lost/anti-theft, inbuilt 3000 Mah power charging, separation alarm, selfie button and it is RFID protected. It has two-way Smart connectivity with the mobile phone and wallet. which ensures the safety of your wallet as well as your mobile phone.
+While designing the team makes sure to keep the aesthetics in&nbsp;&nbsp;mind. Hence, all wallets are made of Design engineered leather.</p>
+  </section>
+
+  <!-- ── CHALLENGE / OUTCOME / DELIVERED / YEAR ── -->
+  <section class="info-grid reveal">
+    <div>
+      <h3>The Challenge</h3>
+      <p>Wallet-bot is a new age wallet with tech enabled features like anti lost/anti-theft, inbuilt 3000 Mah power charging, separation alarm, selfie button and it is RFID protected.</p>
+    </div>
+    <div>
+      <h3>The Outcome</h3>
+      <p>Wallet-bot is a new age wallet with tech enabled features like anti lost/anti-theft, inbuilt 3000 Mah power charging, separation alarm, selfie button and it is RFID protected.</p>
+    </div>
+    <div>
+      <h3>Delivered</h3>
+      <ul>
+        <li>Graphic Designing</li>
+        <li>Art Direction</li>
+        <li>Copy Writing</li>
+        <li>Photography</li>
+        <li>Social Media Marketing</li>
+        <li>Illustrations</li>
+        <li>Campaigns Designing</li>
+        <li>Presentations</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Year</h3>
+      <p>2021</p>
+    </div>
+  </section>
+
+  <!-- ── SOCIAL MEDIA ── -->
+  <section class="dark-card social-card reveal">
+    <button class="phone-btn" id="instaPhoneBtn" aria-haspopup="dialog" aria-label="Open the aristavault Instagram profile preview">
+      <img class="phone" src="arista-assets/phone-mockup.png" alt="Arista Vault Instagram profile on a phone — India's first smart luggage brand, as seen on Shark Tank India" />
+    </button>
+    <div class="social-text">
+      <h2>Social Media</h2>
+      <p>Wallet-bot is a new age wallet with tech enabled features like anti lost/anti-theft, inbuilt 3000 Mah power charging, separation alarm, selfie button and it is RFID protected. It has two-way Smart connectivity with the mobile phone and wallet. which ensures the safety of your wallet as well as your mobile phone.
+While designing the team makes sure to keep the aesthetics in&nbsp;&nbsp;mind. Hence, all wallets are made of Design engineered leather.</p>
+    </div>
+  </section>
+
+  <!-- ── PHOTOGRAPHY ── -->
+  <section class="dark-card photo-card-section reveal">
+    <div class="photo-text">
+      <h2>Photography</h2>
+      <p>This section includes my photography projects, where I showcase the versatility and beauty of smart products in various themes. From the ruggedness of adventure to the sophistication of fashion, this project showcases the timeless appeal of the product through the camera lens. Each image captures the uniqueness and character of leather, showcasing product versatility.</p>
+    </div>
+    <button class="photo-cover-btn" id="photoCoverBtn" aria-haspopup="dialog" aria-label="Open the Arista Vault photography book">
+      <img src="photography/front-page.svg" alt="Arista Vault Photography book cover" />
+    </button>
+  </section>
+
+  <!-- ── IMAGE MANIPULATION ── -->
+  <section class="dark-card manip-card reveal">
+    <div class="manip-head">
+      <h2>Image<br>Manipulation</h2>
+      <p>The image manipulation work helped bring the product's features and campaign ideas to life through visually striking compositions. These edits were created to make the communication more impactful, turning technical features like anti-theft, tracking, and smart connectivity into clear and engaging visual stories.</p>
+    </div>
+    <div class="manip-strip" id="manipStrip">
+      <img src="arista-assets/manip-1.jpg" alt="Image manipulation — wallet peeled open revealing a circuit board" />
+      <img src="arista-assets/manip-2.jpg" alt="Image manipulation — two-way separation alarm campaign visual" />
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="credits-footer">
+  <div class="wrap">
+    <h2>Credits</h2>
+    <p class="credits-body">Arista Vault was one of the first organisations I had the opportunity to work with, and it became a strong foundation for my learning as a designer. The project allowed me to explore a wide range of domains, from graphic design and campaigns to photography, social media, and presentations. I am grateful to the founders, stakeholders, and collaborative colleagues who made the journey insightful, disciplined, and deeply formative. A lot of what I learnt here shaped the way I understand responsibility, detail, and teamwork in design.</p>
+
+    <span class="view-another">VIEW ANOTHER PROJECT</span>
+
+    <ul class="project-rows">
+      <li><a href="oichi.html">Oichii-The Ramen Bar</a></li>
+      <li><a href="ministry.html">Ministry of Commerce and Industry</a></li>
+      <li><a href="maavatar.html">MaAvatar</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ── PHOTOGRAPHY FLIPBOOK MODAL (same as home page) ── -->
+<div class="book-modal photo-modal" id="photoModal" role="dialog" aria-modal="true" aria-label="Arista Vault photography book">
+  <div class="book-board photo-board">
+    <button class="menu-close book-close" aria-label="Close photography book">&#10005;</button>
+
+    <div class="book-wrap">
+      <div class="book">
+        <div class="page-slot slot-left">
+          <img class="page-img" alt="Photography left page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-left" aria-label="Previous page"></button>
+        </div>
+
+        <div class="page-slot slot-right">
+          <img class="page-img" alt="Photography right page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-right" aria-label="Next page"></button>
+        </div>
+
+        <div class="flipper" aria-hidden="true">
+          <div class="flip-face flip-front">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+          <div class="flip-face flip-back">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-nav">
+      <button class="book-prev" aria-label="Previous page">&larr;</button>
+      <span class="menu-counter book-counter" aria-live="polite"></span>
+      <button class="book-next" aria-label="Next page">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── INSTAGRAM POPUP (social-card phone) ── -->
+<div class="book-modal insta-modal" id="instaModal" role="dialog" aria-modal="true" aria-label="aristavault Instagram profile preview">
+  <button class="menu-close insta-close" aria-label="Close Instagram preview">&#10005;</button>
+  <div class="insta-phone">
+    <div class="ig-feed" id="igFeed">
+      <img class="ig-header" src="arista-assets/insta/profile-header.jpg" alt="aristavault Instagram profile — India's first smart luggage brand, 54 posts, 20.1k followers" />
+      <div class="ig-grid" id="igGrid"></div>
+    </div>
+    <img class="ig-nav" src="arista-assets/insta/nav-bar.jpg" alt="" aria-hidden="true" />
+    <div class="ig-post" id="igPost" hidden>
+      <div class="ig-carousel" hidden>
+        <div class="ig-car-track">
+          <div class="ig-slide ig-slide1"></div>
+          <div class="ig-slide ig-slide2"></div>
+        </div>
+        <button class="ig-car-prev" aria-label="Previous image"></button>
+        <button class="ig-car-next" aria-label="Next image"></button>
+      </div>
+      <div class="ig-dotcover" hidden><span class="active"></span><span></span></div>
+      <button class="ig-back" aria-label="Back to profile grid"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ── Image manipulation strip: drag to scroll ── */
+  (function dragScroll() {
+    const strip = document.getElementById('manipStrip');
+    let down = false, startX = 0, startScroll = 0;
+
+    strip.addEventListener('pointerdown', (e) => {
+      down = true;
+      startX = e.clientX;
+      startScroll = strip.scrollLeft;
+      strip.classList.add('dragging');
+      strip.setPointerCapture(e.pointerId);
+    });
+
+    strip.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      strip.scrollLeft = startScroll - (e.clientX - startX);
+    });
+
+    ['pointerup', 'pointercancel'].forEach(ev =>
+      strip.addEventListener(ev, () => {
+        down = false;
+        strip.classList.remove('dragging');
+      }));
+  })();
+
+  /* ══════════════════════════════════════════
+     PHOTOGRAPHY FLIPBOOK (same as home page)
+  ══════════════════════════════════════════ */
+  function createFlipbook({ modal, trigger, faces }) {
+    const closeBtn  = modal.querySelector('.book-close');
+    const slotLeft  = modal.querySelector('.slot-left');
+    const slotRight = modal.querySelector('.slot-right');
+    const leftImg   = slotLeft.querySelector('.page-img');
+    const rightImg  = slotRight.querySelector('.page-img');
+    const flipper   = modal.querySelector('.flipper');
+    const flipFront = modal.querySelector('.flip-front img');
+    const flipBack  = modal.querySelector('.flip-back img');
+    const prevBtn   = modal.querySelector('.book-prev');
+    const nextBtn   = modal.querySelector('.book-next');
+    const counter   = modal.querySelector('.book-counter');
+
+    const lastState = Math.floor(faces.length / 2);
+
+    let state     = 0;
+    let flipping  = false;
+    let isOpen    = false;
+    let preloaded = false;
+
+    const leftFaceOf  = s => s === 0 ? null : faces[2 * s - 1];
+    const rightFaceOf = s => faces[2 * s] || null;
+
+    function setSlot(slot, img, face) {
+      slot.classList.toggle('empty', !face);
+      if (face) img.src = face;
+    }
+
+    function render() {
+      setSlot(slotLeft,  leftImg,  leftFaceOf(state));
+      setSlot(slotRight, rightImg, rightFaceOf(state));
+      counter.textContent = (state + 1) + ' / ' + (lastState + 1);
+      prevBtn.disabled = state === 0;
+      nextBtn.disabled = state === lastState;
+    }
+
+    function flip(dir) {
+      if (flipping) return;
+      const target = state + dir;
+      if (target < 0 || target > lastState) return;
+
+      flipping = true;
+
+      if (dir > 0) {
+        flipFront.src = rightFaceOf(state);
+        flipBack.src  = leftFaceOf(target);
+        setSlot(slotRight, rightImg, rightFaceOf(target));
+        flipper.classList.add('flip-forward');
+      } else {
+        flipFront.src = leftFaceOf(state);
+        flipBack.src  = rightFaceOf(target);
+        setSlot(slotLeft, leftImg, leftFaceOf(target));
+        flipper.classList.add('flip-backward');
+      }
+    }
+
+    flipper.addEventListener('animationend', (e) => {
+      if (e.target !== flipper) return;
+      state += flipper.classList.contains('flip-forward') ? 1 : -1;
+      flipper.classList.remove('flip-forward', 'flip-backward');
+      flipping = false;
+      render();
+    });
+
+    function open() {
+      if (!preloaded) {
+        faces.forEach(src => { const im = new Image(); im.src = src; });
+        preloaded = true;
+      }
+      state = 0;
+      flipping = false;
+      flipper.classList.remove('flip-forward', 'flip-backward');
+      render();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      isOpen = true;
+      closeBtn.focus();
+    }
+
+    function close() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      isOpen = false;
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+    modal.querySelector('.zone-left').addEventListener('click', () => flip(-1));
+    modal.querySelector('.zone-right').addEventListener('click', () => flip(1));
+    prevBtn.addEventListener('click', () => flip(-1));
+    nextBtn.addEventListener('click', () => flip(1));
+
+    window.addEventListener('keydown', (e) => {
+      if (!isOpen) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); flip(1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); flip(-1); }
+      if (e.key === 'Escape')     { e.preventDefault(); close(); }
+    });
+
+    return { open };
+  }
+
+  const PHOTO_FACES = [
+    'front-page',
+    'second-left',   'second-right',
+    'third-left',    'third-right',
+    'fourth-left',   'fourth-right',
+    'fifth-left',    'fifth-right',
+    'sixth-left',    'sixth-right',
+    'seventh-left',  'seventh-right',
+    'eighth-left',   'eighth-right',
+    'nineth-left',   'nineth-right',
+    'tenth-left',    'tenth-right',
+    'eleventh-left', 'eleventh-right',
+  ].map(n => 'photography/' + n + '.svg');
+
+  createFlipbook({
+    modal:   document.getElementById('photoModal'),
+    trigger: document.getElementById('photoCoverBtn'),
+    faces:   PHOTO_FACES,
+  });
+
+  /* ══════════════════════════════════════════
+     INSTAGRAM POPUP (social-card phone)
+  ══════════════════════════════════════════ */
+  (function instaPopup() {
+    const DIR = 'arista-assets/insta/';
+    /* screens 4–40 = the 37 grid posts in order; these ones are 2-slide carousels */
+    const CAROUSELS = new Set([5, 7, 8, 9, 11, 14, 15, 16, 17, 18, 19, 23, 27, 31, 35, 36, 37]);
+
+    const modal    = document.getElementById('instaModal');
+    const trigger  = document.getElementById('instaPhoneBtn');
+    const feed     = document.getElementById('igFeed');
+    const grid     = document.getElementById('igGrid');
+    const post     = document.getElementById('igPost');
+    const carousel = post.querySelector('.ig-carousel');
+    const track    = post.querySelector('.ig-car-track');
+    const slide1   = post.querySelector('.ig-slide1');
+    const slide2   = post.querySelector('.ig-slide2');
+    const dotcover = post.querySelector('.ig-dotcover');
+    const dots     = dotcover.querySelectorAll('span');
+
+    let isOpen = false;
+    let slideIdx = 0;
+
+    const screenUrl = n => DIR + 'screen-' + String(n).padStart(2, '0') + '.jpg';
+
+    for (let n = 4; n <= 40; n++) {
+      const cell = document.createElement('button');
+      cell.className = 'ig-cell';
+      cell.setAttribute('aria-label', 'Open post');
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.src = screenUrl(n);
+      img.alt = '';
+      cell.appendChild(img);
+      cell.addEventListener('click', () => openPost(n));
+      grid.appendChild(cell);
+    }
+
+    function setSlide(i) {
+      slideIdx = Math.max(0, Math.min(1, i));
+      track.style.transform = 'translateX(' + (-100 * slideIdx) + '%)';
+      carousel.classList.toggle('at-2', slideIdx === 1);
+      dots.forEach((d, j) => d.classList.toggle('active', j === slideIdx));
+    }
+
+    function openPost(n) {
+      post.style.backgroundImage = 'url("' + screenUrl(n) + '")';
+      const isCar = CAROUSELS.has(n);
+      carousel.hidden = !isCar;
+      dotcover.hidden = !isCar;
+      if (isCar) {
+        slide1.style.backgroundImage = 'url("' + screenUrl(n) + '")';
+        slide2.style.backgroundImage = 'url("' + DIR + 'slide-' + String(n).padStart(2, '0') + '.jpg")';
+        setSlide(0);
+      }
+      post.hidden = false;
+    }
+
+    function closePost() { post.hidden = true; }
+
+    function open() {
+      feed.scrollTop = 0;
+      closePost();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      isOpen = true;
+      modal.querySelector('.insta-close').focus();
+    }
+
+    function close() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      isOpen = false;
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', open);
+    modal.querySelector('.insta-close').addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    post.querySelector('.ig-back').addEventListener('click', closePost);
+    post.querySelector('.ig-car-next').addEventListener('click', () => setSlide(slideIdx + 1));
+    post.querySelector('.ig-car-prev').addEventListener('click', () => setSlide(slideIdx - 1));
+
+    window.addEventListener('keydown', (e) => {
+      if (!isOpen) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        post.hidden ? close() : closePost();
+        return;
+      }
+      if (post.hidden || carousel.hidden) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); setSlide(slideIdx + 1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); setSlide(slideIdx - 1); }
+    });
+  })();
+</script>
+
+</body>
+</html>

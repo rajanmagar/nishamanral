@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #0060CE;
+      --yellow: #FFEF28;
+      --card-radius: 30px;
+      --gap: 70px;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ══════════════════════════════════════════
+       TOP NAV — yellow bar, outside hero card
+    ══════════════════════════════════════════ */
+    .top-nav {
+      top: 0;
+      z-index: 100;
+      background: var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2.5rem;
+      margin: 40px 40px 0 40px;
+      border-radius: 16px;
+    }
+
+    .top-nav .logo img {
+      height: 30px;
+      display: block;
+    }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .top-nav .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: #111;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+    }
+
+    .top-nav .btn-contact {
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sticky N indicator (right side) */
+    .n-indicator {
+      position: fixed;
+      right: 1.2rem;
+      width: 42px;
+      height: 42px;
+      background: var(--blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      z-index: 200;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+    }
+
+    .n-indicator.top    { top: 4.5rem; }
+    .n-indicator.bottom { bottom: 1.5rem; }
+
+    /* ══════════════════════════════════════════
+       PAGE WRAPPER (adds side margins)
+    ══════════════════════════════════════════ */
+    .page-wrap {
+      padding: 40px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap);
+    }
+
+    /* Shared card shell */
+    .card-shell {
+      background: #fff;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 1 — HERO (sticky scroll)
+    ══════════════════════════════════════════ */
+    .hero-scroll-container {
+      position: relative;
+      height: 220vh;
+    }
+
+    .hero {
+      position: sticky;
+      top: 48px; /* height of top-nav */
+      height: calc(100vh - 48px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1.3px solid var(--blue);
+      border-radius: var(--card-radius);
+    }
+
+    /* Yellow flood from bottom */
+    .bg-yellow {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 0%;
+      background: linear-gradient(to top, var(--yellow) 0%, var(--yellow) 60%, rgba(255,239,40,0) 100%);
+      z-index: 1;
+      will-change: height;
+      border-radius: 0 0 calc(var(--card-radius) - 2px) calc(var(--card-radius) - 2px);
+    }
+
+    /* Stage */
+    .hero-stage {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      overflow: hidden;
+    }
+
+    /* PORTFOLIO text — positioned at ~55% from top */
+    .port-text, .folio-text {
+      font-size: clamp(4rem, 8.5vw, 8.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--blue);
+      flex-shrink: 0;
+      user-select: none;
+      will-change: opacity;
+      margin-top: -7vh;
+    }
+
+    /* Character — head gap at top, body clips at bottom */
+    .char-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: clamp(260px, 26vw, 380px);
+      align-self: flex-start;
+      margin-top: 3vh;
+      z-index: 10;
+    }
+
+    .char-wrap img {
+      position: absolute;
+      top: 80px; left: 0;
+      width: 100%;
+      display: block;
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    .char-img-1 { opacity: 1; position: relative; }
+    .char-img-2 { opacity: 0; }
+
+    /* 2025 badge — left of the face, tucked behind the nose */
+    .badge {
+      position: absolute;
+      top: 24vh;
+      left: -6%;
+      background: var(--yellow);
+      color: var(--blue);
+      font-size: clamp(1rem, 1.5vw, 1.4rem);
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      padding: 0.35rem 1.1rem;
+      z-index: -1;
+      white-space: nowrap;
+      will-change: opacity;
+    }
+
+    /* Yellow accent rect — floating behind the shoulder */
+    .yellow-accent {
+      position: absolute;
+      left: 45%;
+      top: 47%;
+      width: 30%;
+      height: 11%;
+      background: var(--yellow);
+      z-index: 4;
+    }
+
+    /* Service cards overlay */
+    .cards-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0 7% 7.5vh;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      transform: translateY(110%);
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(1rem, 5.5vw, 80px);
+      width: 100%;
+    }
+
+    .service-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 5 / 4;
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      border-radius: 16px;
+      padding: 0;
+      font-size: clamp(1rem, 1.8vw, 1.6rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: center;
+      color: var(--blue);
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      transition: transform 0.18s ease;
+    }
+
+    .service-card:hover { transform: translateY(-4px); }
+
+    /* ══════════════════════════════════════════
+       SECTION 2 — ABOUT (second-section.svg)
+    ══════════════════════════════════════════ */
+    .about-section {
+      position: relative;
+      container-type: inline-size;
+    }
+
+    .about-section img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Rotating word — patches over the grey "Conceptualize" baked into the SVG */
+    .rotate-word-wrap {
+      position: absolute;
+      left: 6.1cqw;
+      top: 18%;
+      width: 42.2cqw;
+      height: 11.8%;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .rotate-word-inner {
+      height: 100%;
+      animation: wordRoll 3s infinite cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .rotate-word-inner span {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 5.2cqw;
+      color: #d6d6d6;
+      white-space: nowrap;
+    }
+
+    @keyframes wordRoll {
+      0%, 20%   { transform: translateY(0); }
+      25%, 45%  { transform: translateY(-100%); }
+      50%, 70%  { transform: translateY(-200%); }
+      75%, 95%  { transform: translateY(-300%); }
+      100%      { transform: translateY(-400%); }
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 3 — SELECT WORK
+    ══════════════════════════════════════════ */
+    .work-section {
+      border: 1.3px solid var(--blue);
+      overflow: hidden;
+    }
+
+    /* Blue banner header */
+    .work-banner {
+      background: var(--blue);
+      padding: 2.5rem 3rem 2.8rem;
+      text-align: center;
+    }
+
+    .work-heading {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.02em;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    /* White body holding the pills */
+    .work-body {
+      background: #fff;
+      padding: 4rem 4rem 5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .work-grid {
+      display: flex;
+      gap: 1.4rem;
+      width: 100%;
+      max-width: 880px;
+      /* row height matches the pill proportions from the Work.svg reference (158:398) */
+      height: clamp(280px, 40vw, 505px);
+    }
+
+    /* Tall pill cards — outline only; hovered card expands like an accordion */
+    .work-card {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      text-decoration: none;
+      background: #fff;
+      border: 1.5px solid var(--blue);
+      border-radius: 999px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1.4rem;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition:
+        flex-grow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        border-radius 0.45s ease,
+        background-color 0.45s ease;
+    }
+
+    /* Background image layer — hidden by default */
+    .work-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    /* Dark overlay on hover — matches the dimmed photos in the reference */
+    .work-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.32);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    /* Each card gets its own bg image */
+    .work-card[data-bg]::before {
+      background-image: var(--card-bg);
+    }
+
+    /* Hovered card expands toward a square, yellow behind the photo,
+       blue stroke stays — per the Work.svg reference */
+    .work-card:hover {
+      flex-grow: 2.6;
+      border-radius: clamp(28px, 6.5vw, 60px);
+      background: var(--yellow);
+    }
+
+    .work-card:hover::before,
+    .work-card:hover::after {
+      opacity: 1;
+    }
+
+    .work-num {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900;
+      color: var(--blue);
+      font-family: 'Inter', Arial, sans-serif;
+      transition: color 0.35s ease;
+    }
+
+    .work-card:hover .work-num {
+      color: #fff;
+    }
+
+    .work-title {
+      position: relative;
+      z-index: 2;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.02em;
+      line-height: 1.55;
+      font-family: Arial, sans-serif;
+      max-height: 5rem;
+      overflow: hidden;
+      transition: color 0.35s ease, opacity 0.3s ease, transform 0.3s ease, max-height 0.35s ease;
+    }
+
+    /* Project name — hidden by default, shown in yellow on hover */
+    .work-project-name {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 900;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-family: 'Inter', Arial, sans-serif;
+      white-space: nowrap;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease;
+    }
+
+    .work-card:hover .work-project-name {
+      opacity: 1;
+      max-height: 3rem;
+      transform: translateY(0);
+    }
+
+    /* Subtitle collapses on hover (swaps with the project name) */
+    .work-card:hover .work-title {
+      opacity: 0;
+      max-height: 0;
+      transform: translateY(5px);
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 4 — THE PROCESS (pinned horizontal reveal)
+    ══════════════════════════════════════════ */
+    .process-scroll-container {
+      position: relative;
+      height: 400vh; /* 1 pinned viewport + 3 scroll steps */
+    }
+
+    .process-section {
+      position: sticky;
+      top: 48px;
+      height: calc(100vh - 48px);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1.3px solid var(--blue);
+      border-radius: var(--card-radius);
+    }
+
+    .process-track {
+      display: flex;
+      align-items: center;
+      gap: 5vw;
+      padding: 0 4vw;
+      will-change: transform;
+    }
+
+    .process-heading {
+      flex-shrink: 0;
+      width: 40vw;
+      font-size: clamp(3.5rem, 7.5vw, 8rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--blue);
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .process-step {
+      flex-shrink: 0;
+      width: 36vw;
+      color: var(--blue);
+    }
+
+    .process-num {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.2rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .process-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.6rem;
+    }
+
+    .process-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      font-weight: 600;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ══════════════════════════════════════════
+       SECTION 5 — SERVICES (blue rows)
+    ══════════════════════════════════════════ */
+    .services-section {
+      display: grid;
+      grid-template-columns: 1fr 2.6fr;
+      gap: 3px;
+      min-height: 100vh;
+    }
+
+    .services-label {
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .services-label span {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: #fff;
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      font-weight: 900;
+    }
+
+    .services-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .services-row {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1 1 0;
+      min-height: 0;
+      overflow: hidden;
+      padding: 2rem 3rem;
+      color: #fff;
+      transition:
+        flex-grow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.6s ease var(--reveal-delay, 0s),
+        transform 0.6s ease var(--reveal-delay, 0s);
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .services-row.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .services-row:nth-child(2) { --reveal-delay: 0.1s; }
+    .services-row:nth-child(3) { --reveal-delay: 0.2s; }
+    .services-row:nth-child(4) { --reveal-delay: 0.3s; }
+
+    .services-row:hover { flex-grow: 3.2; }
+
+    .services-row-head {
+      display: flex;
+      align-items: baseline;
+    }
+
+    .services-row-num {
+      font-size: 0.95rem;
+      font-family: Arial, sans-serif;
+      margin-right: 0.3rem;
+    }
+
+    .services-row-title {
+      font-size: clamp(1.3rem, 2vw, 1.9rem);
+      font-weight: 900;
+    }
+
+    .services-row-sub {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+    }
+
+    .services-row:hover .services-row-sub {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      transition: grid-template-rows 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.15s;
+    }
+
+    .services-row-sub ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .services-row-sub li {
+      font-size: 0.85rem;
+      font-family: Arial, sans-serif;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      max-width: 26rem;
+    }
+
+    .services-row-sub li:first-child { margin-top: 0.9rem; }
+
+    /* ══════════════════════════════════════════
+       SECTION 6 — QUOTE (yellow card)
+    ══════════════════════════════════════════ */
+    .quote-section {
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      min-height: 80vh;
+      display: flex;
+    }
+
+    .quote-text {
+      color: var(--blue);
+      font-size: clamp(2rem, 3.4vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.25;
+      margin: 22vh 0 0 26%;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .quote-text.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .quote-q { color: #fff; }
+
+    /* ══════════════════════════════════════════
+       SECTION 7 — LET'S WORK TOGETHER (footer)
+    ══════════════════════════════════════════ */
+    .contact-section {
+      background: var(--blue);
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 6rem;
+    }
+
+    .contact-inner {
+      padding: 0 5.5rem;
+    }
+
+    .contact-heading {
+      color: #fff;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.05;
+    }
+
+    .contact-yellow { color: var(--yellow); }
+    .contact-bang   { color: #fff; }
+
+    .contact-sub {
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      max-width: 26rem;
+      margin-top: 2rem;
+    }
+
+    .contact-divider {
+      border-top: 1px solid rgba(255, 255, 255, 0.85);
+      margin-top: auto;
+    }
+
+    .btn-get-in-touch {
+      align-self: flex-start;
+      background: var(--yellow);
+      color: #113;
+      font-family: Arial, sans-serif;
+      font-size: 1.05rem;
+      padding: 0.75rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      margin: 3rem 0 4rem 5.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-get-in-touch:hover { transform: translateY(-3px); }
+
+    /* ══════════════════════════════════════════
+       MENU FLIPBOOK MODAL
+    ══════════════════════════════════════════ */
+    .book-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 15, 15, 0.72);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .book-modal.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .book-board {
+      position: relative;
+      width: calc(100vw - 160px);   /* 80px space from every corner */
+      height: calc(100vh - 160px);
+      border-radius: 32px;
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+      padding: 4vh 4vw 2.5vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2vh;
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .book-modal.open .book-board { transform: scale(1); }
+
+    .menu-board  { background: url('menu-book/wood-texture.jpg') center / cover; }
+    .photo-board { background: url('photography/wood-texture-light.jpg') center / cover; }
+
+    .book-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book {
+      position: relative;
+      height: 100%;
+      max-width: 100%;
+      perspective: 2600px;
+    }
+
+    .menu-modal .book  { aspect-ratio: 928 / 656; }
+    .photo-modal .book { aspect-ratio: 1016 / 579; }
+
+
+    .page-slot {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+    }
+
+    .slot-left  { left: 0; }
+    .slot-right { left: 50%; }
+
+    .page-slot.empty { visibility: hidden; }
+
+    .page-slot > img,
+    .flip-face img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .page-slot > .spine-shadow {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 7%;
+      pointer-events: none;
+    }
+
+    .slot-left > .spine-shadow {
+      right: 0;
+      background: linear-gradient(to left, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .slot-right > .spine-shadow {
+      left: 0;
+      background: linear-gradient(to right, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .flip-zone {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .flip-zone:focus-visible { outline: 3px solid var(--yellow); }
+
+    /* Flipping panel */
+    .flipper {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      display: none;
+      z-index: 10;
+    }
+
+    .flipper.flip-forward {
+      display: block;
+      left: 50%;
+      transform-origin: left center;
+      animation: flipFwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    .flipper.flip-backward {
+      display: block;
+      left: 0;
+      transform-origin: right center;
+      animation: flipBwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    @keyframes flipFwd { from { transform: rotateY(0); } to { transform: rotateY(-180deg); } }
+    @keyframes flipBwd { from { transform: rotateY(0); } to { transform: rotateY(180deg); } }
+
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-back { transform: rotateY(180deg); }
+
+    .flip-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0) 60%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .flipper.flip-forward .flip-shade,
+    .flipper.flip-backward .flip-shade {
+      animation: flipShade 750ms ease-in-out forwards;
+    }
+
+    @keyframes flipShade {
+      0%   { opacity: 0; }
+      50%  { opacity: 0.35; }
+      100% { opacity: 0; }
+    }
+
+    /* ══════════════════════════════════════════
+       SOCIAL MEDIA MODAL (Instagram post)
+    ══════════════════════════════════════════ */
+    .social-post {
+      display: flex;
+      background: #111;
+      border-radius: 22px;
+      overflow: hidden;
+      /* 1.482 = carousel ratio (693/925) + review ratio (1407/1920) */
+      height: min(calc(100vh - 160px), calc((100vw - 160px) / 1.482));
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .social-modal.open .social-post { transform: scale(1); }
+
+    .social-carousel {
+      position: relative;
+      height: 100%;
+      aspect-ratio: 693 / 925;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .social-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .social-slide {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+      display: block;
+    }
+
+    .social-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(30, 30, 30, 0.65);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 5;
+      font-family: Arial, sans-serif;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .social-nav:hover { background: rgba(30, 30, 30, 0.9); }
+    .social-prev { left: 14px; }
+    .social-next { right: 14px; }
+    .social-nav.hidden { opacity: 0; pointer-events: none; }
+
+    .social-review {
+      height: 100%;
+      aspect-ratio: 1407 / 1920;
+    }
+
+    .social-review img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .social-close {
+      position: absolute;
+      top: 28px;
+      right: 28px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      color: #111;
+      font-size: 1.15rem;
+      cursor: pointer;
+      z-index: 20;
+      font-family: Arial, sans-serif;
+      transition: transform 0.2s ease;
+    }
+
+    .social-close:hover { transform: scale(1.08); }
+
+    /* Brand book — wide slide carousel, no side panel */
+    .brand-frame {
+      width: min(calc(100vw - 160px), calc((100vh - 160px) * 1.971));
+      aspect-ratio: 1088 / 552;
+      background: #111;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .brand-modal.open .brand-frame { transform: scale(1); }
+
+    .brand-modal .social-carousel {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    /* Brand slides have arrow icons drawn into the artwork —
+       overlay transparent hit-areas on them instead of our own visuals */
+    .brand-modal .social-nav {
+      background: transparent;
+      color: transparent;
+      width: 3.5%;
+      aspect-ratio: 1;
+      height: auto;
+    }
+
+    .brand-modal .social-nav:hover { background: rgba(255, 255, 255, 0.15); }
+    .brand-modal .social-prev { left: 0.9%; }
+    .brand-modal .social-next { right: 0.6%; }
+
+    /* Close + nav UI */
+    .menu-close {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 20;
+      font-family: Arial, sans-serif;
+      transition: background 0.2s ease;
+    }
+
+    .menu-close:hover { background: rgba(0, 0, 0, 0.7); }
+
+    .menu-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .menu-nav button {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 1.15rem;
+      cursor: pointer;
+      font-family: Arial, sans-serif;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-nav button:hover:not(:disabled) { background: rgba(0, 0, 0, 0.7); }
+    .menu-nav button:disabled { opacity: 0.35; cursor: default; }
+
+    .menu-counter {
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      min-width: 3.2rem;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    @media (max-width: 700px) {
+      .char-wrap { width: 190px; margin-top: -70px; }
+      .port-text, .folio-text { font-size: 13vw; }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      /* Accordion hover doesn't suit touch — back to a 2×2 grid */
+      .work-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        height: auto;
+      }
+      .work-card { flex: none; aspect-ratio: 3 / 5; }
+      .cards-overlay { padding: 0 1rem 1.5rem; }
+      .work-body { padding: 2rem 1.5rem 3rem; }
+      .n-indicator { display: none; }
+      .process-heading { width: 80vw; font-size: 15vw; }
+      .process-step { width: 78vw; }
+      .services-section { grid-template-columns: 1fr; }
+      .services-label { padding: 1.5rem 0; }
+      .services-label span { writing-mode: horizontal-tb; transform: none; }
+      .services-row { padding: 1.5rem 1.5rem; }
+      .services-row-sub li { max-width: 100%; }
+      .quote-text { margin: 18vh 8% 0; }
+      .contact-inner { padding: 0 2rem; }
+      .btn-get-in-touch { margin: 2.5rem 0 3rem 2rem; }
+      .book-board {
+        width: calc(100vw - 32px);
+        height: calc(100vh - 32px);
+        padding: 3vh 3vw 2.5vh;
+      }
+      .social-post {
+        flex-direction: column;
+        height: auto;
+        width: calc(100vw - 32px);
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
+      }
+      .social-carousel { width: 100%; height: auto; aspect-ratio: 693 / 925; }
+      .social-review   { width: 100%; height: auto; aspect-ratio: 1407 / 1920; }
+      .social-close { top: 12px; right: 12px; }
+      .brand-frame { width: calc(100vw - 32px); }
+      .brand-modal .social-carousel { aspect-ratio: auto; height: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     TOP NAV (yellow, outside hero)
+═══════════════════════════════════════════ -->
+<nav class="top-nav">
+  <a class="logo" href="#"><img src="logo.svg" alt="Logo" /></a>
+  <div class="nav-links">
+    <a href="#">About</a>
+    <a href="#">Work</a>
+    <a href="#" class="btn-contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     PAGE CONTENT
+═══════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── HERO ── -->
+  <div class="hero-scroll-container" id="heroScrollContainer">
+    <section class="hero" id="hero">
+
+      <div class="bg-yellow" id="bgYellow"></div>
+
+      <div class="hero-stage">
+        <div class="yellow-accent"></div>
+
+        <span class="port-text" id="portText">PORT</span>
+
+        <div class="char-wrap">
+          <img src="side-profile.svg"   class="char-img-1" id="charImg1" alt="Nisha" />
+          <img src="side-profile-2.svg" class="char-img-2" id="charImg2" alt="Nisha scrolled" />
+          <div class="badge" id="badge2025">2025</div>
+        </div>
+
+        <span class="folio-text" id="folioText">FOLIO</span>
+      </div>
+
+      <div class="cards-overlay" id="cardsOverlay">
+        <div class="cards-grid">
+          <div class="service-card" id="menuCard">Menu</div>
+          <div class="service-card" id="brandCard">Brand Book</div>
+          <div class="service-card" id="socialCard">Social Media</div>
+          <div class="service-card" id="photoCard">Photography</div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ── ABOUT ── -->
+  <div class="card-shell about-section" id="aboutSection">
+    <img src="second-section.svg" alt="About Nisha" />
+    <div class="rotate-word-wrap" aria-hidden="true">
+      <div class="rotate-word-inner">
+        <span>Conceptualize</span>
+        <span>Illustrate</span>
+        <span>Direct</span>
+        <span>Visualise</span>
+        <span>Conceptualize</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SELECT WORK ── -->
+  <div class="work-section" id="workSection">
+    <div class="work-banner">
+      <h2 class="work-heading">Select Work</h2>
+    </div>
+    <div class="work-body">
+      <div class="work-grid">
+
+        <a class="work-card" href="oichi.html" data-bg style="--card-bg: url('work-assets/work-01.jpg')">
+          <span class="work-num">01</span>
+          <span class="work-project-name">OICHII</span>
+          <span class="work-title">Brand &amp; Visual<br>Experience Design</span>
+        </a>
+
+        <a class="work-card" href="ministry.html" data-bg style="--card-bg: url('work-assets/work-02.jpg')">
+          <span class="work-num">02</span>
+          <span class="work-project-name">Vanijya</span>
+          <span class="work-title">Editorial &amp;<br>Marketing Design</span>
+        </a>
+
+        <a class="work-card" href="arista-vault.html" data-bg style="--card-bg: url('work-assets/work-03.jpg')">
+          <span class="work-num">03</span>
+          <span class="work-project-name">Arista Vault</span>
+          <span class="work-title">Social Media &amp;<br>Communication Design</span>
+        </a>
+
+        <a class="work-card" href="maavatar.html" data-bg style="--card-bg: url('work-assets/work-04.jpg')">
+          <span class="work-num">04</span>
+          <span class="work-project-name">MaAvatar</span>
+          <span class="work-title">Brand, Marketing &amp;<br>Visual Design</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── THE PROCESS ── -->
+  <div class="process-scroll-container" id="processScrollContainer">
+    <section class="process-section" id="processSection">
+      <div class="process-track" id="processTrack">
+
+        <h2 class="process-heading">The<br>Process</h2>
+
+        <div class="process-step">
+          <span class="process-num">01</span>
+          <h3 class="process-title">Immersion &amp; Intent</h3>
+          <p class="process-body">Before I design anything, I immerse myself in your world. I study the brand beyond the visuals &mdash; the ambition behind it, the people it speaks to, the feeling it should leave behind. Every decision starts with understanding the deeper intent, because great design is never decoration; it&rsquo;s clarity with purpose. I ask difficult questions, challenge assumptions, and uncover the details others usually miss. That foundation is what allows the work to feel inevitable, not accidental.</p>
+        </div>
+
+        <div class="process-step">
+          <span class="process-num">02</span>
+          <h3 class="process-title">Narrative &amp; Direction</h3>
+          <p class="process-body">Strong visuals mean nothing without a strong point of view. Once I understand the core of the project, I shape a clear creative direction that gives the brand its voice, attitude, and emotional weight. This is where strategy and aesthetics become inseparable. Every reference, composition, type choice, interaction, and motion language is crafted to build a distinct identity &mdash; something memorable, not trend-driven. The goal is to create work that feels timeless, intentional, and unmistakably yours.</p>
+        </div>
+
+        <div class="process-step">
+          <span class="process-num">03</span>
+          <h3 class="process-title">Design &amp; Refinement</h3>
+          <p class="process-body">This is where precision matters most. I design obsessively &mdash; refining spacing, rhythm, typography, hierarchy, contrast, and interaction until everything feels effortless. The smallest details often create the strongest impression, so nothing is left unresolved. I believe exceptional design should feel simple, even when the thinking behind it is complex. Every screen, transition, and visual element is built to create an experience that feels polished, immersive, and emotionally resonant.</p>
+        </div>
+
+        <div class="process-step">
+          <span class="process-num">04</span>
+          <h3 class="process-title">Craftsmanship &amp; Longevity</h3>
+          <p class="process-body">I don&rsquo;t believe in handing over work that only looks good in a presentation. The final outcome should perform beautifully in the real world &mdash; across devices, users, and future growth. I stay deeply involved through refinement, feedback, and implementation to ensure the original vision remains intact. The standard is simple: the work should still feel world-class years from now, not just impressive today.</p>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- ── SERVICES ── -->
+  <section class="services-section" id="servicesSection">
+    <div class="services-label"><span>Services</span></div>
+    <div class="services-rows">
+      <div class="services-row">
+        <div class="services-row-head">
+          <span class="services-row-num">01</span>
+          <span class="services-row-title">Strategy</span>
+        </div>
+        <div class="services-row-sub">
+          <ul>
+            <li>Research &amp; Discovery</li>
+            <li>Competitor Analysis</li>
+            <li>Art Direction</li>
+            <li>Content Strategy</li>
+            <li>Brainstorming</li>
+            <li>Story Boarding</li>
+          </ul>
+        </div>
+      </div>
+      <div class="services-row">
+        <div class="services-row-head">
+          <span class="services-row-num">02</span>
+          <span class="services-row-title">Graphic Designing</span>
+        </div>
+        <div class="services-row-sub">
+          <ul>
+            <li>Logo Design</li>
+            <li>Typography</li>
+            <li>Publication Design</li>
+            <li>Image Manipulation</li>
+            <li>Illustrations/Sketching</li>
+            <li>Merchandise Design</li>
+            <li>Brand Guidelines</li>
+          </ul>
+        </div>
+      </div>
+      <div class="services-row">
+        <div class="services-row-head">
+          <span class="services-row-num">03</span>
+          <span class="services-row-title">Marketing and Content</span>
+        </div>
+        <div class="services-row-sub">
+          <ul>
+            <li>Social Media Design</li>
+            <li>Campaigns Design</li>
+            <li>Copywriting</li>
+            <li>Mood Boarding</li>
+            <li>Video Editing</li>
+            <li>Consumer Research and Analysis</li>
+            <li>Visual Tone</li>
+          </ul>
+        </div>
+      </div>
+      <div class="services-row">
+        <div class="services-row-head">
+          <span class="services-row-num">04</span>
+          <span class="services-row-title">Brand Development</span>
+        </div>
+        <div class="services-row-sub">
+          <ul>
+            <li>Brand Positioning</li>
+            <li>Logo system creation</li>
+            <li>Audience Segmentation</li>
+            <li>Brand storytelling</li>
+            <li>Tone and mood direction</li>
+            <li>Design system creation</li>
+            <li>Icon system creation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUOTE ── -->
+  <section class="quote-section" id="quoteSection">
+    <p class="quote-text">I design for the moment<br>things start to make <span class="quote-q">?</span></p>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<!-- ═══════════════════════════════════════════
+     LET'S WORK TOGETHER (footer, full-bleed)
+═══════════════════════════════════════════ -->
+<footer class="contact-section" id="contactSection">
+  <div class="contact-inner">
+    <h2 class="contact-heading">Let's Work<br><span class="contact-yellow">Together</span><span class="contact-bang">!</span></h2>
+    <p class="contact-sub">Ready to bring your creative vision to life? Let's collaborate and create something amazing.</p>
+  </div>
+  <div class="contact-divider"></div>
+  <a class="btn-get-in-touch" href="#">Get in Touch</a>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     FLIPBOOK MODALS (menu + photography)
+═══════════════════════════════════════════ -->
+<div class="book-modal menu-modal" id="menuModal" role="dialog" aria-modal="true" aria-label="OICHII menu book">
+  <div class="book-board menu-board">
+    <button class="menu-close book-close" aria-label="Close menu">&#10005;</button>
+
+    <div class="book-wrap">
+      <div class="book">
+        <div class="page-slot slot-left">
+          <img class="page-img" alt="Menu left page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-left" aria-label="Previous page"></button>
+        </div>
+
+        <div class="page-slot slot-right">
+          <img class="page-img" alt="Menu right page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-right" aria-label="Next page"></button>
+        </div>
+
+        <div class="flipper" aria-hidden="true">
+          <div class="flip-face flip-front">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+          <div class="flip-face flip-back">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-nav">
+      <button class="book-prev" aria-label="Previous page">&larr;</button>
+      <span class="menu-counter book-counter" aria-live="polite"></span>
+      <button class="book-next" aria-label="Next page">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="book-modal photo-modal" id="photoModal" role="dialog" aria-modal="true" aria-label="Photography book">
+  <div class="book-board photo-board">
+    <button class="menu-close book-close" aria-label="Close photography book">&#10005;</button>
+
+    <div class="book-wrap">
+      <div class="book">
+        <div class="page-slot slot-left">
+          <img class="page-img" alt="Photography left page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-left" aria-label="Previous page"></button>
+        </div>
+
+        <div class="page-slot slot-right">
+          <img class="page-img" alt="Photography right page" />
+          <div class="spine-shadow"></div>
+          <button class="flip-zone zone-right" aria-label="Next page"></button>
+        </div>
+
+        <div class="flipper" aria-hidden="true">
+          <div class="flip-face flip-front">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+          <div class="flip-face flip-back">
+            <img alt="" />
+            <div class="flip-shade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-nav">
+      <button class="book-prev" aria-label="Previous page">&larr;</button>
+      <span class="menu-counter book-counter" aria-live="polite"></span>
+      <button class="book-next" aria-label="Next page">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="book-modal social-modal" id="socialModal" role="dialog" aria-modal="true" aria-label="Instagram post">
+  <button class="social-close" aria-label="Close post">&#10005;</button>
+  <div class="social-post">
+    <div class="social-carousel">
+      <div class="social-track" id="socialTrack"></div>
+      <button class="social-nav social-prev" id="socialPrev" aria-label="Previous image">&#8249;</button>
+      <button class="social-nav social-next" id="socialNext" aria-label="Next image">&#8250;</button>
+    </div>
+    <div class="social-review">
+      <img src="social-media/review.png" alt="Instagram review of OICHII The Ramen Bar" />
+    </div>
+  </div>
+</div>
+
+<div class="book-modal brand-modal" id="brandModal" role="dialog" aria-modal="true" aria-label="Brand book slides">
+  <button class="social-close" aria-label="Close brand book">&#10005;</button>
+  <div class="brand-frame">
+    <div class="social-carousel">
+      <div class="social-track"></div>
+      <button class="social-nav social-prev" aria-label="Previous slide">&#8249;</button>
+      <button class="social-nav social-next" aria-label="Next slide">&#8250;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCROLL ANIMATION + SECTION SNAPPING
+═══════════════════════════════════════════ -->
+<script>
+  const bgYellow      = document.getElementById('bgYellow');
+  const portText      = document.getElementById('portText');
+  const folioText     = document.getElementById('folioText');
+  const charImg1      = document.getElementById('charImg1');
+  const charImg2      = document.getElementById('charImg2');
+  const badge2025     = document.getElementById('badge2025');
+  const cardsOverlay  = document.getElementById('cardsOverlay');
+  const aboutSection  = document.getElementById('aboutSection');
+  const workSection   = document.getElementById('workSection');
+  const processScrollContainer = document.getElementById('processScrollContainer');
+  const processSection = document.getElementById('processSection');
+  const processTrack   = document.getElementById('processTrack');
+  const servicesSection = document.getElementById('servicesSection');
+  const quoteSection    = document.getElementById('quoteSection');
+  const contactSection  = document.getElementById('contactSection');
+
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function clamp(v,lo,hi) { return Math.max(lo, Math.min(hi, v)); }
+  function prog(t,a,b) { return clamp((t-a)/(b-a), 0, 1); }
+
+  /* ── Hero animation (runs every frame while scrolling) ── */
+  let ticking = false;
+
+  function updateHero() {
+    const viewH = window.innerHeight;
+    const p     = clamp(window.scrollY / viewH, 0, 1);
+
+    bgYellow.style.height = (easeInOut(prog(p, 0.05, 0.85)) * 85) + '%';
+
+    const tOp = 1 - easeInOut(prog(p, 0.1, 0.7)) * 0.82;
+    portText.style.opacity  = tOp;
+    folioText.style.opacity = tOp;
+
+    badge2025.style.opacity = 1 - easeInOut(prog(p, 0.05, 0.5)) * 0.8;
+
+    const eyeP = easeInOut(prog(p, 0.15, 0.65));
+    charImg1.style.opacity = 1 - eyeP;
+    charImg2.style.opacity = eyeP;
+
+    const cardsP = easeInOut(prog(p, 0.45, 0.95));
+    cardsOverlay.style.transform = `translateY(${(1 - cardsP) * 110}%)`;
+    cardsOverlay.style.opacity   = cardsP;
+  }
+
+  /* ── Process animation (horizontal strip reveal) ── */
+  function updateProcess() {
+    const viewH        = window.innerHeight;
+    const containerTop = processScrollContainer.offsetTop;
+    const scrollRange  = processScrollContainer.offsetHeight - viewH;
+    const p = clamp((window.scrollY - containerTop) / scrollRange, 0, 1);
+
+    const maxShift = Math.max(0, processTrack.scrollWidth - processSection.clientWidth);
+    processTrack.style.transform = `translateX(${-p * maxShift}px)`;
+  }
+
+  function updateSections() {
+    ticking = false;
+    updateHero();
+    updateProcess();
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(updateSections); ticking = true; }
+  }, { passive: true });
+
+  updateSections();
+
+  /* ── Section snap positions ── */
+  function getSnapPositions() {
+    const viewH = window.innerHeight;
+    const maxScroll = document.documentElement.scrollHeight - viewH;
+    return [
+      0,                                              // Hero state 1
+      viewH,                                          // Hero state 2 (animated)
+      aboutSection.getBoundingClientRect().top + window.scrollY, // About
+      workSection.getBoundingClientRect().top + window.scrollY,  // Work
+    ].concat(
+      // Process: 4 stops, one per step reveal
+      [0, 1, 2, 3].map(i =>
+        processScrollContainer.getBoundingClientRect().top + window.scrollY + i * viewH
+      )
+    ).concat([
+      Math.min(servicesSection.getBoundingClientRect().top + window.scrollY - 20, maxScroll),
+      Math.min(quoteSection.getBoundingClientRect().top + window.scrollY - 20, maxScroll),
+      maxScroll, // Contact footer — bottom of page
+    ]);
+  }
+
+  let currentSnap = 0;
+  let isSnapping  = false;
+  const SNAP_COOLDOWN = 900; // ms before next snap allowed
+
+  function findClosestSnap(positions, scrollY) {
+    let closest = 0;
+    let minDist = Infinity;
+    positions.forEach((pos, i) => {
+      const dist = Math.abs(scrollY - pos);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    return closest;
+  }
+
+  function snapTo(index) {
+    const positions = getSnapPositions();
+    index = clamp(index, 0, positions.length - 1);
+    if (index === currentSnap && Math.abs(window.scrollY - positions[index]) < 5) return;
+
+    currentSnap = index;
+    isSnapping = true;
+
+    window.scrollTo({ top: positions[index], behavior: 'smooth' });
+
+    setTimeout(() => { isSnapping = false; }, SNAP_COOLDOWN);
+  }
+
+  /* ── Wheel handler — hijack scroll, snap section by section ── */
+  let wheelAccum = 0;
+  let wheelTimer = null;
+  const WHEEL_THRESHOLD = 50; // accumulated delta before triggering snap
+
+  window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (bookOpen || isSnapping) return;
+
+    // Accumulate small deltas (trackpad) before snapping
+    wheelAccum += e.deltaY;
+
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { wheelAccum = 0; }, 200);
+
+    if (Math.abs(wheelAccum) < WHEEL_THRESHOLD) return;
+
+    const direction = wheelAccum > 0 ? 1 : -1;
+    wheelAccum = 0;
+
+    // Re-sync currentSnap to actual scroll position
+    const positions = getSnapPositions();
+    currentSnap = findClosestSnap(positions, window.scrollY);
+
+    snapTo(currentSnap + direction);
+  }, { passive: false });
+
+  /* ── Touch handler — swipe up/down to snap ── */
+  let touchStartY = 0;
+
+  window.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (bookOpen || isSnapping) return;
+    const deltaY = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(deltaY) < 40) return; // ignore small swipes
+
+    const direction = deltaY > 0 ? 1 : -1;
+    const positions = getSnapPositions();
+    currentSnap = findClosestSnap(positions, window.scrollY);
+    snapTo(currentSnap + direction);
+  }, { passive: true });
+
+  /* ── Keyboard: arrow keys / page up-down ── */
+  window.addEventListener('keydown', (e) => {
+    if (bookOpen || isSnapping) return;
+    let direction = 0;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') direction = 1;
+    if (e.key === 'ArrowUp'   || e.key === 'PageUp')   direction = -1;
+    if (!direction) return;
+
+    e.preventDefault();
+    const positions = getSnapPositions();
+    currentSnap = findClosestSnap(positions, window.scrollY);
+    snapTo(currentSnap + direction);
+  });
+
+  /* ── Staggered reveal for services rows + quote text ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      if (entry.target === servicesSection) {
+        servicesSection.querySelectorAll('.services-row').forEach(r => r.classList.add('visible'));
+      } else {
+        entry.target.querySelector('.quote-text').classList.add('visible');
+      }
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.3 });
+
+  revealObserver.observe(servicesSection);
+  revealObserver.observe(quoteSection);
+
+  /* ══════════════════════════════════════════
+     FLIPBOOKS (menu + photography)
+  ══════════════════════════════════════════ */
+  let bookOpen = false; // any flipbook modal open — checked by the scroll-snap handlers
+
+  function createFlipbook({ modal, trigger, faces }) {
+    const board     = modal.querySelector('.book-board');
+    const closeBtn  = modal.querySelector('.book-close');
+    const slotLeft  = modal.querySelector('.slot-left');
+    const slotRight = modal.querySelector('.slot-right');
+    const leftImg   = slotLeft.querySelector('.page-img');
+    const rightImg  = slotRight.querySelector('.page-img');
+    const flipper   = modal.querySelector('.flipper');
+    const flipFront = modal.querySelector('.flip-front img');
+    const flipBack  = modal.querySelector('.flip-back img');
+    const prevBtn   = modal.querySelector('.book-prev');
+    const nextBtn   = modal.querySelector('.book-next');
+    const counter   = modal.querySelector('.book-counter');
+
+    // faces = [cover, L1, R1, L2, R2, …, (back?)]
+    const lastState = Math.floor(faces.length / 2);
+
+    let state     = 0;
+    let flipping  = false;
+    let isOpen    = false;
+    let preloaded = false;
+
+    const leftFaceOf  = s => s === 0 ? null : faces[2 * s - 1];
+    const rightFaceOf = s => faces[2 * s] || null;
+
+    function setSlot(slot, img, face) {
+      slot.classList.toggle('empty', !face);
+      if (face) img.src = face;
+    }
+
+    function render() {
+      setSlot(slotLeft,  leftImg,  leftFaceOf(state));
+      setSlot(slotRight, rightImg, rightFaceOf(state));
+      counter.textContent = (state + 1) + ' / ' + (lastState + 1);
+      prevBtn.disabled = state === 0;
+      nextBtn.disabled = state === lastState;
+    }
+
+    function flip(dir) {
+      if (flipping) return;
+      const target = state + dir;
+      if (target < 0 || target > lastState) return;
+
+      flipping = true;
+
+      if (dir > 0) {
+        // Right page rotates over to the left
+        flipFront.src = rightFaceOf(state);
+        flipBack.src  = leftFaceOf(target);
+        setSlot(slotRight, rightImg, rightFaceOf(target)); // revealed underneath
+        flipper.classList.add('flip-forward');
+      } else {
+        // Left page rotates back to the right
+        flipFront.src = leftFaceOf(state);
+        flipBack.src  = rightFaceOf(target);
+        setSlot(slotLeft, leftImg, leftFaceOf(target)); // revealed underneath
+        flipper.classList.add('flip-backward');
+      }
+    }
+
+    flipper.addEventListener('animationend', (e) => {
+      if (e.target !== flipper) return; // ignore shade animations
+      state += flipper.classList.contains('flip-forward') ? 1 : -1;
+      flipper.classList.remove('flip-forward', 'flip-backward');
+      flipping = false;
+      render();
+    });
+
+    function open() {
+      if (!preloaded) {
+        faces.forEach(src => { const im = new Image(); im.src = src; });
+        preloaded = true;
+      }
+      state = 0;
+      flipping = false;
+      flipper.classList.remove('flip-forward', 'flip-backward');
+      render();
+      modal.classList.add('open');
+      isOpen = true;
+      bookOpen = true;
+      closeBtn.focus();
+    }
+
+    function close() {
+      modal.classList.remove('open');
+      isOpen = false;
+      bookOpen = false;
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+
+    modal.querySelector('.zone-left').addEventListener('click', () => flip(-1));
+    modal.querySelector('.zone-right').addEventListener('click', () => flip(1));
+    prevBtn.addEventListener('click', () => flip(-1));
+    nextBtn.addEventListener('click', () => flip(1));
+
+    window.addEventListener('keydown', (e) => {
+      if (!isOpen) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); flip(1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); flip(-1); }
+      if (e.key === 'Escape')     { e.preventDefault(); close(); }
+    });
+
+    return { open };
+  }
+
+  const MENU_FACES = [
+    'front-page',
+    'second-page-left', 'second-page-right',
+    'third-page-left',  'third-page-right',
+    'fourth-page-left', 'fourth-page-right',
+    'fifth-page-left',  'fifth-page-right',
+    'last-page',
+  ].map(n => 'menu-book/' + n + '.svg');
+
+  const PHOTO_FACES = [
+    'front-page',
+    'second-left',   'second-right',
+    'third-left',    'third-right',
+    'fourth-left',   'fourth-right',
+    'fifth-left',    'fifth-right',
+    'sixth-left',    'sixth-right',
+    'seventh-left',  'seventh-right',
+    'eighth-left',   'eighth-right',
+    'nineth-left',   'nineth-right',
+    'tenth-left',    'tenth-right',
+    'eleventh-left', 'eleventh-right',
+  ].map(n => 'photography/' + n + '.svg');
+
+  createFlipbook({
+    modal:   document.getElementById('menuModal'),
+    trigger: document.getElementById('menuCard'),
+    faces:   MENU_FACES,
+  });
+
+  createFlipbook({
+    modal:   document.getElementById('photoModal'),
+    trigger: document.getElementById('photoCard'),
+    faces:   PHOTO_FACES,
+  });
+
+  /* ══════════════════════════════════════════
+     SLIDE CAROUSELS (social post + brand book)
+  ══════════════════════════════════════════ */
+  function createCarousel({ modal, trigger, slides }) {
+    const track    = modal.querySelector('.social-track');
+    const prevBtn  = modal.querySelector('.social-prev');
+    const nextBtn  = modal.querySelector('.social-next');
+    const closeBtn = modal.querySelector('.social-close');
+
+    let index  = 0;
+    let isOpen = false;
+
+    slides.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'social-slide';
+      img.src = src;
+      img.alt = 'Slide ' + (i + 1) + ' of ' + slides.length;
+      track.appendChild(img);
+    });
+
+    function render() {
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+      prevBtn.classList.toggle('hidden', index === 0);
+      nextBtn.classList.toggle('hidden', index === slides.length - 1);
+    }
+
+    function slide(dir) {
+      const target = index + dir;
+      if (target < 0 || target >= slides.length) return;
+      index = target;
+      render();
+    }
+
+    function open() {
+      index = 0;
+      render();
+      modal.classList.add('open');
+      isOpen = true;
+      bookOpen = true;
+      closeBtn.focus();
+    }
+
+    function close() {
+      modal.classList.remove('open');
+      isOpen = false;
+      bookOpen = false;
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    prevBtn.addEventListener('click', () => slide(-1));
+    nextBtn.addEventListener('click', () => slide(1));
+
+    window.addEventListener('keydown', (e) => {
+      if (!isOpen) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); slide(1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); slide(-1); }
+      if (e.key === 'Escape')     { e.preventDefault(); close(); }
+    });
+
+    return { open };
+  }
+
+  createCarousel({
+    modal:   document.getElementById('socialModal'),
+    trigger: document.getElementById('socialCard'),
+    slides:  [1, 2, 3, 4, 5, 6, 7, 8].map(n => 'social-media/social-media-' + n + '.svg'),
+  });
+
+  createCarousel({
+    modal:   document.getElementById('brandModal'),
+    trigger: document.getElementById('brandCard'),
+    slides:  [120, 121, 122, 123, 124, 125, 126, 127, 129, 130, 131, 132,
+              133, 134, 135, 136, 137, 138, 139, 140, 141, 142]
+      .map(n => 'brand-book/Property 1=Frame ' + n + '.svg'),
+  });
+</script>
+
+</body>
+</html>

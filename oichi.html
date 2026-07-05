@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OICHII — The Ramen Bar | Portfolio 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:  #0060CE;
+      --yellow:#FFEF28;
+      --red:   #DB1921;
+      --lblue: #CBEAF0;
+      --beige: #EEE0D3;
+      --cream: #FFFBE3;
+      --ink:   #1c1c1c;
+      --card-radius: 40px;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    img { display: block; }
+
+    /* ══════════════════════════════════════════
+       TOP NAV — same yellow bar as home page
+    ══════════════════════════════════════════ */
+    .top-nav {
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2.5rem;
+      margin: 40px 40px 0 40px;
+      border-radius: 16px;
+    }
+
+    .top-nav .logo img { height: 30px; display: block; }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .top-nav .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .top-nav .btn-contact {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT HELPERS
+    ══════════════════════════════════════════ */
+    .wrap {
+      width: calc(100% - 80px);
+      max-width: 1376px;
+      margin-inline: auto;
+    }
+
+    /* Section header: heading left, paragraph right */
+    .sec-head {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .sec-head h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(2.2rem, 4.2vw, 4rem);
+      line-height: 1.05;
+      color: #000;
+    }
+
+    .sec-head p {
+      font-size: clamp(0.85rem, 1.05vw, 1rem);
+      line-height: 1.6;
+      padding-top: 0.4em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       HERO — lightbox photo card
+    ══════════════════════════════════════════ */
+    .hero-card {
+      margin-top: 70px;
+    }
+
+    .hero-card img {
+      width: 100%;
+      aspect-ratio: 1377 / 680;
+      object-fit: cover;
+      object-position: 50% 38%;
+      border-radius: var(--card-radius);
+    }
+
+    /* ══════════════════════════════════════════
+       BRAND INTRO
+    ══════════════════════════════════════════ */
+    .intro {
+      margin-top: 100px;
+      display: grid;
+      grid-template-columns: minmax(220px, 341px) 1fr;
+      gap: clamp(2rem, 15vw, 230px);
+      align-items: start;
+    }
+
+    .intro img { width: 100%; height: auto; }
+
+    .intro p {
+      font-size: clamp(0.85rem, 1.05vw, 1rem);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════
+       CHALLENGE / OUTCOME / DELIVERED / YEAR
+    ══════════════════════════════════════════ */
+    .info-grid {
+      margin-top: 90px;
+      display: grid;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.5fr;
+      gap: clamp(2rem, 4vw, 60px);
+    }
+
+    .info-grid h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.1rem, 1.5vw, 1.45rem);
+      color: #000;
+      margin-bottom: 1.2rem;
+    }
+
+    .info-grid p, .info-grid li {
+      font-size: clamp(0.76rem, 0.88vw, 0.85rem);
+      line-height: 1.6;
+    }
+
+    .info-grid ul { list-style: none; }
+    .info-grid li { line-height: 1.65; }
+
+    /* ══════════════════════════════════════════
+       SKETCH BOARD + POLAROID
+    ══════════════════════════════════════════ */
+    .sketch-board {
+      margin-top: 100px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .board-img {
+      width: 100%;
+      aspect-ratio: 1376 / 554;
+      object-fit: cover;
+    }
+
+    .sketch-polaroid {
+      position: absolute;
+      right: 0.4%;
+      bottom: -30%;
+      width: 23.5%;
+      transform: rotate(-1deg);
+    }
+
+    /* ══════════════════════════════════════════
+       COLOR PALETTE SWATCHES
+    ══════════════════════════════════════════ */
+    .swatches {
+      margin-top: 76px;
+      width: 88.2%;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 11px;
+    }
+
+    .swatches div {
+      aspect-ratio: 295 / 298;
+      border-radius: 9px;
+    }
+
+    .sw-blue  { background: var(--lblue); }
+    .sw-beige { background: var(--beige); }
+    .sw-red   { background: var(--red); }
+    .sw-cream { background: var(--cream); }
+
+    /* Red logo lockup on beige card */
+    .logo-card {
+      display: block;
+      width: 89.3%;
+      margin: 33px auto 0;
+    }
+
+    /* ══════════════════════════════════════════
+       MENU — inline flipbook in light-blue card
+    ══════════════════════════════════════════ */
+    .menu-section { margin-top: 76px; }
+
+    .menu-card {
+      margin-top: 64px;
+      background: var(--lblue);
+      border-radius: var(--card-radius);
+      aspect-ratio: 1376 / 620;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2vw;
+      padding: 2.4% 3%;
+    }
+
+    .book-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book {
+      position: relative;
+      height: 100%;
+      max-width: 100%;
+      aspect-ratio: 928 / 656;
+      perspective: 2600px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* keep the visible page centered when the book is closed */
+    .book.at-start { transform: translateX(-25%); }
+    .book.at-end   { transform: translateX(25%); }
+
+    .page-slot {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+    }
+
+    .slot-left  { left: 0; }
+    .slot-right { left: 50%; }
+    .page-slot.empty { visibility: hidden; }
+
+    .page-slot > img,
+    .flip-face img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    }
+
+    .page-slot > .spine-shadow {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 7%;
+      pointer-events: none;
+    }
+
+    .slot-left > .spine-shadow {
+      right: 0;
+      background: linear-gradient(to left, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .slot-right > .spine-shadow {
+      left: 0;
+      background: linear-gradient(to right, rgba(40, 40, 40, 0.35), rgba(40, 40, 40, 0));
+    }
+
+    .flip-zone {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .flip-zone:focus-visible { outline: 3px solid var(--blue); }
+
+    .flipper {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transform-style: preserve-3d;
+      will-change: transform;
+      display: none;
+      z-index: 10;
+    }
+
+    .flipper.flip-forward {
+      display: block;
+      left: 50%;
+      transform-origin: left center;
+      animation: flipFwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    .flipper.flip-backward {
+      display: block;
+      left: 0;
+      transform-origin: right center;
+      animation: flipBwd 750ms cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+    }
+
+    @keyframes flipFwd { from { transform: rotateY(0); } to { transform: rotateY(-180deg); } }
+    @keyframes flipBwd { from { transform: rotateY(0); } to { transform: rotateY(180deg); } }
+
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flip-back { transform: rotateY(180deg); }
+
+    .flip-shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0) 60%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .flipper.flip-forward .flip-shade,
+    .flipper.flip-backward .flip-shade {
+      animation: flipShade 750ms ease-in-out forwards;
+    }
+
+    @keyframes flipShade {
+      0%   { opacity: 0; }
+      50%  { opacity: 0.35; }
+      100% { opacity: 0; }
+    }
+
+    .menu-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .menu-nav button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(0, 96, 206, 0.85);
+      color: #fff;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .menu-nav button:hover:not(:disabled) { background: var(--blue); }
+    .menu-nav button:disabled { opacity: 0.35; cursor: default; }
+
+    .menu-counter {
+      color: var(--blue);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      min-width: 3.2rem;
+      text-align: center;
+    }
+
+    /* Photo cards with red outline */
+    .photo-card {
+      width: 100%;
+      border-radius: var(--card-radius);
+      border: 2px solid var(--red);
+      object-fit: cover;
+    }
+
+    .menu-photo {
+      margin-top: 60px;
+      aspect-ratio: 1374 / 822;
+    }
+
+    /* ══════════════════════════════════════════
+       PAMPHLET
+    ══════════════════════════════════════════ */
+    .pamphlet-section { margin-top: 86px; }
+
+    .pamphlet-imgs {
+      margin-top: 84px;
+      padding: 0 3%;
+      display: flex;
+      justify-content: space-between;
+      gap: 4%;
+    }
+
+    .pamphlet-imgs img {
+      width: 40.3%;
+      height: auto;
+      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.08);
+    }
+
+    .standee-photo {
+      display: block;
+      margin: 72px auto 0;
+      width: 93.75%;
+      aspect-ratio: 1290 / 865;
+      border-radius: 39px;
+      border: 4px solid var(--red);
+      object-fit: cover;
+    }
+
+    /* ══════════════════════════════════════════
+       SOCIAL MEDIA — inline Instagram post
+    ══════════════════════════════════════════ */
+    .social-section { margin-top: 100px; }
+
+    .social-post {
+      margin: 66px auto 0;
+      width: 91.7%;
+      display: flex;
+      background: #111;
+      border-radius: 38px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .social-carousel {
+      position: relative;
+      flex: 0 0 50.5%;
+      aspect-ratio: 693 / 925;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .social-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .social-slide {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    .social-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(30, 30, 30, 0.65);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .social-nav:hover { background: rgba(30, 30, 30, 0.9); }
+    .social-prev { left: 14px; }
+    .social-next { right: 14px; }
+    .social-nav.hidden { opacity: 0; pointer-events: none; }
+
+    .social-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 7px;
+      z-index: 5;
+    }
+
+    .social-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      transition: background 0.25s ease;
+    }
+
+    .social-dots span.active { background: #fff; }
+
+    .social-review { flex: 1; }
+
+    .social-review img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ══════════════════════════════════════════
+       FLAG DESIGN
+    ══════════════════════════════════════════ */
+    .flag-section { margin-top: 100px; }
+
+    .flag-photo {
+      margin-top: 64px;
+      aspect-ratio: 1373 / 827;
+    }
+
+    /* ══════════════════════════════════════════
+       LOYALTY CARD + PACKAGING STICKER
+    ══════════════════════════════════════════ */
+    .duo-section {
+      margin-top: 110px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 11.3%;
+      row-gap: 46px;
+    }
+
+    .duo-section h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.7rem, 2.7vw, 2.6rem);
+      color: #000;
+      align-self: end;
+    }
+
+    .duo-card {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--card-radius);
+      border: 2px solid var(--red);
+      overflow: hidden;
+    }
+
+    .duo-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .loyalty-photo { object-position: 42% 50%; }
+
+    .loyalty-front, .loyalty-back {
+      position: absolute;
+      left: 8.4%;
+      width: 28%;
+      height: auto;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+      border-radius: 6px;
+    }
+
+    .loyalty-front { top: 6.2%; }
+    .loyalty-back  { top: 54.8%; }
+
+    .loyalty-icon {
+      position: absolute;
+      left: 18.7%;
+      top: 74.4%;
+      width: 7.6%;
+      height: auto;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER — credits + other projects
+    ══════════════════════════════════════════ */
+    .credits-footer {
+      margin-top: 100px;
+      background: var(--blue);
+      padding-top: 80px;
+    }
+
+    .credits-footer h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 2.7vw, 2.6rem);
+      color: var(--yellow);
+    }
+
+    .credits-footer .credits-body {
+      margin-top: 28px;
+      max-width: 830px;
+      color: #fff;
+      font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+      line-height: 1.65;
+    }
+
+    .view-another {
+      display: inline-block;
+      margin-top: 56px;
+      color: var(--yellow);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .project-rows {
+      margin-top: 26px;
+      list-style: none;
+    }
+
+    .project-rows a {
+      display: grid;
+      border-top: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 42px 0 42px 14px;
+      color: #fff;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3.4vw, 3.25rem);
+      line-height: 1.1;
+      text-decoration: none;
+      transition: padding-left 0.3s ease, color 0.3s ease;
+    }
+
+    .project-rows a > span {
+      grid-area: 1 / 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-rows a .row-alt { opacity: 0; transform: translateY(8px); }
+
+    .project-rows a:hover {
+      padding-left: 34px;
+      color: var(--yellow);
+    }
+
+    .project-rows a:hover .row-name { opacity: 0; transform: translateY(-8px); }
+    .project-rows a:hover .row-alt  { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 760px) {
+      .top-nav { margin: 16px 16px 0; padding: 0.65rem 1.2rem; }
+      .top-nav .nav-links { gap: 1.2rem; }
+      .wrap { width: calc(100% - 32px); }
+      .hero-card { margin-top: 32px; }
+      .hero-card img { border-radius: 22px; }
+      .intro { grid-template-columns: 1fr; gap: 2rem; margin-top: 56px; }
+      .intro img { max-width: 260px; }
+      .info-grid { grid-template-columns: 1fr 1fr; margin-top: 56px; }
+      .sec-head { grid-template-columns: 1fr; gap: 1.2rem; }
+      .sketch-board { margin-top: 60px; }
+      .swatches { gap: 7px; }
+      .menu-card { aspect-ratio: auto; padding: 22px 12px; gap: 12px; }
+      .book-wrap { width: 100%; }
+      .book { width: 100%; height: auto; }
+      .menu-photo, .flag-photo, .photo-card { border-radius: 22px; }
+      .standee-photo { width: 100%; border-radius: 22px; border-width: 2px; }
+      .social-post {
+        width: 100%;
+        flex-direction: column;
+        border-radius: 22px;
+      }
+      .social-carousel { flex: none; width: 100%; }
+      .social-review { aspect-ratio: 1407 / 1920; }
+      .duo-section { grid-template-columns: 1fr; row-gap: 20px; }
+      .duo-section h2 { margin-top: 26px; }
+      .credits-footer { padding-top: 48px; margin-top: 64px; }
+      .project-rows a { padding: 26px 0 26px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <a class="logo" href="index.html"><img src="logo.svg" alt="Logo" /></a>
+  <div class="nav-links">
+    <a href="index.html">About</a>
+    <a href="index.html#workSection">Work</a>
+    <a href="index.html#contactSection" class="btn-contact">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── HERO ── -->
+  <section class="hero-card reveal">
+    <img src="oichi-assets/hero-lightbox.jpg" alt="OICHII The Ramen Bar lightbox signboard" />
+  </section>
+
+  <!-- ── BRAND INTRO ── -->
+  <section class="intro reveal">
+    <img src="oichi-assets/intro-logo.png" alt="OICHII logo — The Ramen Bar" />
+    <p>For Oichii The Ramen Bar, I kept chasing one thought how simple can this get while still feeling like ramen. I explored chopsticks, noodle lines, and different type styles, repeating the same idea in multiple ways to see what actually sticks. Most of these were part of the process, not the answer. Each version helped me remove the extra and get closer to something that felt natural. The final one worked because it felt effortless, clear, balanced, and still rooted in the idea without trying too hard.</p>
+  </section>
+
+  <!-- ── CHALLENGE / OUTCOME / DELIVERED / YEAR ── -->
+  <section class="info-grid reveal">
+    <div>
+      <h3>The Challenge</h3>
+      <p>Creating a brand identity for Oichii that felt simple yet full of character. The goal was to capture the warmth and authenticity of a ramen bar while avoiding overused, clich&eacute; Japanese visuals. It needed to feel inviting, modern, and memorable across everything- from the logo to the in-store elements.</p>
+    </div>
+    <div>
+      <h3>The Outcome</h3>
+      <p>A cohesive and distinctive brand system that brings Oichii to life. From a minimal yet expressive logo to playful, self-made illustrations, every element works together to create a warm and recognizable identity. The brand feels balanced&mdash;rooted in Japanese inspiration but interpreted in a fresh, contemporary way.</p>
+    </div>
+    <div>
+      <h3>Delivered</h3>
+      <ul>
+        <li>Logo Design</li>
+        <li>Menu Design</li>
+        <li>Custom Illustrations</li>
+        <li>&ldquo;Make Your Own Ramen&rdquo; Pamphlet</li>
+        <li>Packaging Design</li>
+        <li>Japanese Hanging Flag</li>
+        <li>Loyalty Card</li>
+        <li>Canvas &amp; In-store Graphics</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Year</h3>
+      <p>2026</p>
+    </div>
+  </section>
+
+  <!-- ── SKETCH BOARD ── -->
+  <section class="sketch-board reveal">
+    <img class="board-img" src="oichi-assets/sketch-board.jpg" alt="OICHII logo exploration sketches" />
+    <img class="sketch-polaroid" src="oichi-assets/sketch-polaroid.png" alt="Final OICHII logo sketch taped on kraft card" />
+  </section>
+
+  <!-- ── COLOR PALETTE ── -->
+  <section class="swatches reveal" aria-label="Brand color palette">
+    <div class="sw-blue"></div>
+    <div class="sw-beige"></div>
+    <div class="sw-red"></div>
+    <div class="sw-cream"></div>
+  </section>
+
+  <img class="logo-card reveal" src="oichi-assets/logo-card.png" alt="Red OICHII logo lockup on beige card" />
+
+  <!-- ── MENU ── -->
+  <section class="menu-section">
+    <div class="sec-head reveal">
+      <h2>MENU</h2>
+      <p>For Oichii Ramen Bar, I designed a self-illustrated menu that made the ordering experience feel warm, playful and visually inviting. The illustrations helped bring personality into the brand while making the menu feel less formal and more approachable for customers.</p>
+    </div>
+
+    <div class="menu-card reveal" id="menuCard">
+      <div class="book-wrap">
+        <div class="book at-start" id="menuBook">
+          <div class="page-slot slot-left">
+            <img class="page-img" alt="Menu left page" />
+            <div class="spine-shadow"></div>
+            <button class="flip-zone zone-left" aria-label="Previous page"></button>
+          </div>
+
+          <div class="page-slot slot-right">
+            <img class="page-img" alt="Menu right page" />
+            <div class="spine-shadow"></div>
+            <button class="flip-zone zone-right" aria-label="Next page"></button>
+          </div>
+
+          <div class="flipper" aria-hidden="true">
+            <div class="flip-face flip-front">
+              <img alt="" />
+              <div class="flip-shade"></div>
+            </div>
+            <div class="flip-face flip-back">
+              <img alt="" />
+              <div class="flip-shade"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-nav">
+        <button class="book-prev" aria-label="Previous page">&larr;</button>
+        <span class="menu-counter book-counter" aria-live="polite"></span>
+        <button class="book-next" aria-label="Next page">&rarr;</button>
+      </div>
+    </div>
+
+    <img class="photo-card menu-photo reveal" src="oichi-assets/menu-photo.jpg" alt="OICHII illustrated menu open on a wooden table" />
+  </section>
+
+  <!-- ── PAMPHLET ── -->
+  <section class="pamphlet-section">
+    <div class="sec-head reveal">
+      <h2>Pamphlet</h2>
+      <p>This pamphlet was designed to make the process of customising ramen feel simple and enjoyable. Instead of presenting choices as a standard list, I used illustrations and a clear visual flow to guide customers through the experience of building their own bowl.</p>
+    </div>
+
+    <div class="pamphlet-imgs reveal">
+      <img src="oichi-assets/pamphlet-bw.jpg" alt="Build Your Own Ramen pamphlet — checklist version" />
+      <img src="oichi-assets/pamphlet-color.jpg" alt="Build Your Own Ramen pamphlet — illustrated version" />
+    </div>
+
+    <img class="standee-photo reveal" src="oichi-assets/standee-photo.jpg" alt="Build Your Own Ramen pamphlet standee on a restaurant table" />
+  </section>
+
+  <!-- ── SOCIAL MEDIA ── -->
+  <section class="social-section">
+    <div class="sec-head reveal">
+      <h2>Social Media</h2>
+      <p>Oichii has an active presence on social media, where genuine customer feedback played an important role in building trust and relatability. This testimonial is one of many examples that highlights real customer experiences in a warm and brand-consistent way.</p>
+    </div>
+
+    <div class="social-post reveal" id="socialPost">
+      <div class="social-carousel">
+        <div class="social-track" id="socialTrack"></div>
+        <button class="social-nav social-prev" id="socialPrev" aria-label="Previous image">&#8249;</button>
+        <button class="social-nav social-next" id="socialNext" aria-label="Next image">&#8250;</button>
+        <div class="social-dots" id="socialDots"></div>
+      </div>
+      <div class="social-review">
+        <img src="social-media/review.png" alt="Instagram review of OICHII The Ramen Bar" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FLAG DESIGN ── -->
+  <section class="flag-section">
+    <div class="sec-head reveal">
+      <h2>Flag Design</h2>
+      <p>A digitally illustrated flag design created for Oichii Ramen Bar's interior space. The artwork was printed on canvas and used as a hanging decor element, adding a custom visual detail that extended the restaurant's brand language into the physical environment.</p>
+    </div>
+
+    <img class="photo-card flag-photo reveal" src="oichi-assets/flag-photo.jpg" alt="Illustrated noren flag hanging at OICHII" />
+  </section>
+
+  <!-- ── LOYALTY CARD + PACKAGING STICKER ── -->
+  <section class="duo-section">
+    <h2 class="reveal">Loyalty Card</h2>
+    <h2 class="reveal">Packaging Sticker</h2>
+
+    <div class="duo-card reveal">
+      <img class="duo-photo loyalty-photo" src="oichi-assets/loyalty-photo.jpg" alt="Hand holding the OICHII loyalty card" />
+      <img class="loyalty-front" src="oichi-assets/loyalty-card-front.png" alt="Loyalty card front — OICHII storefront illustration" />
+      <img class="loyalty-back" src="oichi-assets/loyalty-card-back.png" alt="Loyalty card back — collect 9, 10th ramen free" />
+      <img class="loyalty-icon" src="oichi-assets/loyalty-icon.png" alt="" aria-hidden="true" />
+    </div>
+    <div class="duo-card reveal">
+      <img class="duo-photo" src="oichi-assets/packaging-photo.jpg" alt="OICHII branded sticker on ramen takeaway packaging" />
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="credits-footer">
+  <div class="wrap">
+    <h2>Credits</h2>
+    <p class="credits-body">Thank you to the team behind Oichii The Ramen Bar for trusting me with the creative direction of this project. Their patience, openness, and faith in my process gave me the freedom to explore the identity without limiting the ideas too early. This trust allowed the project to take its own shape, from the logo to the smallest brand details, and come out exactly the way I had imagined. It was a space where creativity felt supported, and that made the final outcome feel even more honest and personal.</p>
+
+    <span class="view-another">VIEW ANOTHER PROJECT</span>
+
+    <ul class="project-rows">
+      <li><a href="ministry.html"><span class="row-name">Ministry of Commerce and Industry</span><span class="row-alt" aria-hidden="true">Editorial &amp; Marketing Design</span></a></li>
+      <li><a href="arista-vault.html"><span class="row-name">Arista Vault</span><span class="row-alt" aria-hidden="true">Social Media &amp; Brand Communication Design</span></a></li>
+      <li><a href="maavatar.html"><span class="row-name">MaAvatar</span><span class="row-alt" aria-hidden="true">Brand, Marketing &amp; Visual Design</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ══════════════════════════════════════════
+     INLINE MENU FLIPBOOK (same book as home page)
+  ══════════════════════════════════════════ */
+  const MENU_FACES = [
+    'front-page',
+    'second-page-left', 'second-page-right',
+    'third-page-left',  'third-page-right',
+    'fourth-page-left', 'fourth-page-right',
+    'fifth-page-left',  'fifth-page-right',
+    'last-page',
+  ].map(n => 'menu-book/' + n + '.svg');
+
+  (function createInlineFlipbook() {
+    const card      = document.getElementById('menuCard');
+    const book      = document.getElementById('menuBook');
+    const slotLeft  = card.querySelector('.slot-left');
+    const slotRight = card.querySelector('.slot-right');
+    const leftImg   = slotLeft.querySelector('.page-img');
+    const rightImg  = slotRight.querySelector('.page-img');
+    const flipper   = card.querySelector('.flipper');
+    const flipFront = card.querySelector('.flip-front img');
+    const flipBack  = card.querySelector('.flip-back img');
+    const prevBtn   = card.querySelector('.book-prev');
+    const nextBtn   = card.querySelector('.book-next');
+    const counter   = card.querySelector('.book-counter');
+
+    const faces     = MENU_FACES;
+    const lastState = Math.floor(faces.length / 2);
+
+    let state    = 0;
+    let flipping = false;
+
+    const leftFaceOf  = s => s === 0 ? null : faces[2 * s - 1];
+    const rightFaceOf = s => faces[2 * s] || null;
+
+    function setSlot(slot, img, face) {
+      slot.classList.toggle('empty', !face);
+      if (face) img.src = face;
+    }
+
+    function render() {
+      setSlot(slotLeft,  leftImg,  leftFaceOf(state));
+      setSlot(slotRight, rightImg, rightFaceOf(state));
+      counter.textContent = (state + 1) + ' / ' + (lastState + 1);
+      prevBtn.disabled = state === 0;
+      nextBtn.disabled = state === lastState;
+      book.classList.toggle('at-start', state === 0);
+      book.classList.toggle('at-end', state === lastState && !rightFaceOf(state));
+    }
+
+    function flip(dir) {
+      if (flipping) return;
+      const target = state + dir;
+      if (target < 0 || target > lastState) return;
+
+      flipping = true;
+
+      if (dir > 0) {
+        flipFront.src = rightFaceOf(state);
+        flipBack.src  = leftFaceOf(target);
+        setSlot(slotRight, rightImg, rightFaceOf(target));
+        flipper.classList.add('flip-forward');
+      } else {
+        flipFront.src = leftFaceOf(state);
+        flipBack.src  = rightFaceOf(target);
+        setSlot(slotLeft, leftImg, leftFaceOf(target));
+        flipper.classList.add('flip-backward');
+      }
+    }
+
+    flipper.addEventListener('animationend', (e) => {
+      if (e.target !== flipper) return;
+      state += flipper.classList.contains('flip-forward') ? 1 : -1;
+      flipper.classList.remove('flip-forward', 'flip-backward');
+      flipping = false;
+      render();
+    });
+
+    card.querySelector('.zone-left').addEventListener('click', () => flip(-1));
+    card.querySelector('.zone-right').addEventListener('click', () => flip(1));
+    prevBtn.addEventListener('click', () => flip(-1));
+    nextBtn.addEventListener('click', () => flip(1));
+
+    faces.forEach(src => { const im = new Image(); im.src = src; });
+    render();
+  })();
+
+  /* ══════════════════════════════════════════
+     INLINE INSTAGRAM POST (same carousel as home page)
+  ══════════════════════════════════════════ */
+  (function createInlineCarousel() {
+    const slides  = [1, 2, 3, 4, 5, 6, 7, 8].map(n => 'social-media/social-media-' + n + '.svg');
+    const track   = document.getElementById('socialTrack');
+    const prevBtn = document.getElementById('socialPrev');
+    const nextBtn = document.getElementById('socialNext');
+    const dotsBox = document.getElementById('socialDots');
+
+    let index = 0;
+
+    slides.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.className = 'social-slide';
+      img.src = src;
+      img.alt = 'Slide ' + (i + 1) + ' of ' + slides.length;
+      track.appendChild(img);
+
+      const dot = document.createElement('span');
+      dotsBox.appendChild(dot);
+    });
+
+    function render() {
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+      prevBtn.classList.toggle('hidden', index === 0);
+      nextBtn.classList.toggle('hidden', index === slides.length - 1);
+      [...dotsBox.children].forEach((d, i) => d.classList.toggle('active', i === index));
+    }
+
+    function slide(dir) {
+      const target = index + dir;
+      if (target < 0 || target >= slides.length) return;
+      index = target;
+      render();
+    }
+
+    prevBtn.addEventListener('click', () => slide(-1));
+    nextBtn.addEventListener('click', () => slide(1));
+    render();
+  })();
+</script>
+
+</body>
+</html>

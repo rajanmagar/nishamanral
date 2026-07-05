@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaAvatar — Dating Metaverse | Portfolio 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #0060CE;
+      --yellow: #FFEF28;
+      --grey:   #272727;
+      --card-radius: 48px;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    img { display: block; }
+
+    /* Film-grain overlay (design uses a Figma noise filter) */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0.13;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════════════════════════════════════
+       TOP NAV — same yellow bar as home page
+    ══════════════════════════════════════════ */
+    .top-nav {
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2.5rem;
+      margin: 40px 40px 0 40px;
+      border-radius: 16px;
+    }
+
+    .top-nav .logo img { height: 30px; display: block; }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .top-nav .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .top-nav .btn-contact {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT HELPERS
+    ══════════════════════════════════════════ */
+    .wrap {
+      width: calc(100% - 80px);
+      max-width: 1376px;
+      margin-inline: auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Section header: two-tone heading left, paragraph right */
+    .sec-head {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .sec-head h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .sec-head h2 b { font-weight: 700; }
+
+    .sec-head p {
+      font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+      line-height: 1.6;
+      color: #cfcfcf;
+      padding-top: 0.5em;
+      max-width: 46rem;
+    }
+
+    /* ══════════════════════════════════════════
+       INTRO — logo + role paragraph
+    ══════════════════════════════════════════ */
+    .intro {
+      margin-top: 70px;
+      display: grid;
+      grid-template-columns: minmax(220px, 340px) 1fr;
+      gap: clamp(2rem, 12vw, 185px);
+      align-items: center;
+    }
+
+    .intro img { width: 100%; height: auto; }
+
+    .intro p {
+      font-size: clamp(0.82rem, 0.98vw, 0.94rem);
+      line-height: 1.6;
+      color: #e2e2e2;
+      max-width: 47rem;
+    }
+
+    /* ══════════════════════════════════════════
+       CHALLENGE / OUTCOME / DELIVERED / YEAR
+    ══════════════════════════════════════════ */
+    .info-grid {
+      margin-top: 70px;
+      padding: 0 4%;
+      display: grid;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.5fr;
+      gap: clamp(2rem, 4vw, 60px);
+    }
+
+    .info-grid h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
+      color: #fff;
+      margin-bottom: 1.1rem;
+    }
+
+    .info-grid p, .info-grid li {
+      font-size: clamp(0.72rem, 0.82vw, 0.8rem);
+      line-height: 1.6;
+      color: #bdbdbd;
+    }
+
+    .info-grid ul { list-style: none; }
+
+    /* ══════════════════════════════════════════
+       BRAND GUIDE — inline brand-book carousel
+    ══════════════════════════════════════════ */
+    .brand-card {
+      margin-top: 64px;
+      background: var(--grey);
+      border-radius: var(--card-radius);
+      aspect-ratio: 1376 / 738;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-carousel {
+      position: relative;
+      width: 64%;
+      aspect-ratio: 1088 / 552;
+      border-radius: 37px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .brand-track img {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+
+    /* The slide artwork has its own arrow icons drawn in —
+       overlay transparent hit-areas on them (same as home brand modal) */
+    .brand-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3.5%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .brand-nav:hover { background: rgba(255, 255, 255, 0.15); }
+    .brand-prev { left: 0.9%; }
+    .brand-next { right: 0.6%; }
+    .brand-nav.hidden { opacity: 0; pointer-events: none; }
+
+    .brand-counter {
+      position: absolute;
+      bottom: 4.5%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #9a9a9a;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ══════════════════════════════════════════
+       SOCIAL MEDIA BANNERS
+    ══════════════════════════════════════════ */
+    .banners-section { margin-top: 160px; }
+
+    /* Row 1 — horizontal strip, last banner bleeds off the edge */
+    .banner-strip {
+      margin-top: 76px;
+      display: flex;
+      gap: clamp(0.6rem, 3vw, 46px);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+
+    .banner-strip::-webkit-scrollbar { display: none; }
+    .banner-strip.dragging { cursor: grabbing; }
+
+    .banner-strip img {
+      height: clamp(240px, 36vw, 556px);
+      width: auto;
+      border-radius: 24px;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    /* Rows 2–7 — two-column grid of wide banners */
+    .banner-grid {
+      margin-top: clamp(1rem, 2.8vw, 42px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1rem, 3vw, 46px) clamp(1rem, 3.3vw, 50px);
+    }
+
+    .banner-grid img {
+      width: 100%;
+      aspect-ratio: 663 / 373;
+      object-fit: cover;
+      border-radius: 40px;
+    }
+
+    /* ══════════════════════════════════════════
+       CAROUSELS — 4×5 posts grid
+    ══════════════════════════════════════════ */
+    .carousels-section { margin-top: 160px; }
+
+    /* Each row is a carousel: 4 posts visible, arrows step through the series */
+    .carousel-rows {
+      margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.6rem, 4.5vw, 70px);
+    }
+
+    .post-row {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-track {
+      --post-gap: clamp(0.6rem, 1.2vw, 18px);
+      display: flex;
+      gap: var(--post-gap);
+      transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    .post-track img {
+      flex: 0 0 calc((100% - 3 * var(--post-gap)) / 4);
+      min-width: 0;
+      width: calc((100% - 3 * var(--post-gap)) / 4);
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .post-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(60, 60, 60, 0.75);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 5;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .post-nav:hover { background: rgba(90, 90, 90, 0.9); }
+    .post-prev { left: 12px; }
+    .post-next { right: 12px; }
+    .post-nav.hidden { opacity: 0; pointer-events: none; }
+
+    /* ══════════════════════════════════════════
+       CHARACTER DESIGN
+    ══════════════════════════════════════════ */
+    .character-section { margin-top: 160px; }
+
+    .char-cards {
+      margin-top: 76px;
+      width: 78.7%;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.6rem, 4.5vw, 70px);
+    }
+
+    .char-cards img { width: 100%; height: auto; }
+
+    .char-pair {
+      display: flex;
+      gap: clamp(1.6rem, 4.5vw, 70px);
+    }
+
+    .char-pair img { width: calc(50% - clamp(0.8rem, 2.25vw, 35px)); }
+
+    /* ══════════════════════════════════════════
+       MERCHANDISE DESIGN
+    ══════════════════════════════════════════ */
+    /* Merchandise — pinned horizontal scroll (same mechanic as ministry.html) */
+    .merch-scroll-container {
+      position: relative;
+      margin-top: 60px;
+      /* height set by JS: 100vh + horizontal overshoot */
+    }
+
+    .merch-pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(1.5rem, 4vh, 44px);
+      padding: 3vh 0;
+    }
+
+    .merch-head {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 2rem;
+      align-items: start;
+      padding-left: max(40px, calc((100vw - 1376px) / 2));
+      padding-right: 40px;
+    }
+
+    .merch-track {
+      display: flex;
+      gap: clamp(1rem, 3vw, 48px);
+      padding-left: max(40px, calc((100vw - 1376px) / 2));
+      padding-right: 40px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    /* sized by viewport height so heading + strip always fit inside the pin */
+    .merch-track img {
+      height: clamp(280px, 56vh, 700px);
+      width: auto;
+      aspect-ratio: 443 / 554;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER — credits + other projects
+    ══════════════════════════════════════════ */
+    .credits-footer {
+      margin-top: 135px;
+      background: var(--blue);
+      padding-top: 80px;
+    }
+
+    .credits-footer h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 2.7vw, 2.6rem);
+      color: var(--yellow);
+    }
+
+    .credits-footer .credits-body {
+      margin-top: 28px;
+      max-width: 830px;
+      color: #fff;
+      font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+      line-height: 1.65;
+    }
+
+    .view-another {
+      display: inline-block;
+      margin-top: 56px;
+      color: var(--yellow);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .project-rows {
+      margin-top: 26px;
+      list-style: none;
+    }
+
+    .project-rows a {
+      display: grid;
+      border-top: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 42px 0 42px 14px;
+      color: #fff;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3.4vw, 3.25rem);
+      line-height: 1.1;
+      text-decoration: none;
+      transition: padding-left 0.3s ease, color 0.3s ease;
+    }
+
+    .project-rows a > span {
+      grid-area: 1 / 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-rows a .row-alt { opacity: 0; transform: translateY(8px); }
+
+    .project-rows a:hover {
+      padding-left: 34px;
+      color: var(--yellow);
+    }
+
+    .project-rows a:hover .row-name { opacity: 0; transform: translateY(-8px); }
+    .project-rows a:hover .row-alt  { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 760px) {
+      .top-nav { margin: 16px 16px 0; padding: 0.65rem 1.2rem; }
+      .top-nav .nav-links { gap: 1.2rem; }
+      .wrap { width: calc(100% - 32px); }
+      .intro { grid-template-columns: 1fr; gap: 1.6rem; margin-top: 40px; }
+      .intro img { max-width: 240px; }
+      .info-grid { grid-template-columns: 1fr 1fr; margin-top: 48px; padding: 0; }
+      .sec-head { grid-template-columns: 1fr; gap: 1.2rem; }
+      .brand-card { aspect-ratio: auto; padding: 34px 0; border-radius: 26px; }
+      .brand-carousel { width: 86%; border-radius: 16px; }
+      .brand-counter { display: none; }
+      .banners-section, .carousels-section, .character-section { margin-top: 80px; }
+      .banner-strip { margin-top: 40px; }
+      .banner-strip img { border-radius: 14px; }
+      .banner-grid { grid-template-columns: 1fr; margin-top: 16px; }
+      .banner-grid img { border-radius: 18px; }
+      /* Post rows become swipe strips */
+      .carousel-rows { margin-top: 40px; gap: 1.4rem; }
+      .post-nav { display: none; }
+      .post-track {
+        transform: none !important;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .post-track::-webkit-scrollbar { display: none; }
+      .post-track img { flex: 0 0 64vw; }
+      .char-cards { width: 100%; margin-top: 40px; }
+      /* Merch pinned section becomes a plain swipe strip */
+      .merch-scroll-container { height: auto !important; margin-top: 80px; }
+      .merch-pin {
+        position: static;
+        height: auto;
+        overflow: visible;
+        gap: 1.6rem;
+      }
+      .merch-head {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .merch-track {
+        transform: none !important;
+        width: auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .merch-track::-webkit-scrollbar { display: none; }
+      .credits-footer { padding-top: 48px; margin-top: 64px; }
+      .project-rows a { padding: 26px 0 26px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <a class="logo" href="index.html"><img src="logo.svg" alt="Logo" /></a>
+  <div class="nav-links">
+    <a href="index.html">About</a>
+    <a href="index.html#workSection">Work</a>
+    <a href="index.html#contactSection" class="btn-contact">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ── INTRO ── -->
+  <section class="intro reveal">
+    <img src="ma-assets/logo.png" alt="MaAvatar logo" />
+    <p>At MaAvatar, I worked as a Senior Designer for a budding dating metaverse, contributing across brand, marketing, art, UI/UX, and motion-led communication. Since it was a start-up environment, my role involved cross-collaboration with multiple teams, from creating social media concepts, blogs, and community-building creatives to supporting character design, game visuals, presentations, and brand direction. The project allowed me to work across both strategic and visual layers of the brand.</p>
+  </section>
+
+  <!-- ── CHALLENGE / OUTCOME / DELIVERED / YEAR ── -->
+  <section class="info-grid reveal">
+    <div>
+      <h3>The Challenge</h3>
+      <p>As an early-stage metaverse start-up, the challenge was to build a strong and consistent visual identity while supporting multiple departments at the same time. The work required balancing marketing communication, game aesthetics, character direction, UI/UX insights, and brand storytelling, while keeping the overall experience engaging, youthful, and community-driven.</p>
+    </div>
+    <div>
+      <h3>The Outcome</h3>
+      <p>The project resulted in a wide range of design contributions across marketing, branding, game art, and visual communication. I helped shape social media concepts, copywriting, blogs, presentations, brand guidelines, character costumes, the game mascot Maavi, NFT directions, environment moodboards, and storyboard ideas for teasers and short-format videos. The experience strengthened the brand's creative foundation and helped bring consistency across different touchpoints.</p>
+    </div>
+    <div>
+      <h3>Delivered</h3>
+      <ul>
+        <li>Social Media Creatives</li>
+        <li>Concept &amp; Copywriting</li>
+        <li>Blog Visuals</li>
+        <li>Community Building Creatives</li>
+        <li>Brand Guidelines</li>
+        <li>Presentation Design</li>
+        <li>Character Costume Design</li>
+        <li>Game Mascot Design</li>
+        <li>NFT Art Direction</li>
+        <li>Environment Moodboarding</li>
+        <li>UI/UX Visual Insights</li>
+        <li>Storyboard Design</li>
+        <li>Game Teaser/Short-format Concepts</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Year</h3>
+      <p>2024/25</p>
+    </div>
+  </section>
+
+  <!-- ── BRAND GUIDE — inline carousel (same slides as home Brand Book) ── -->
+  <section class="brand-card reveal" id="brandCard">
+    <div class="brand-carousel">
+      <div class="brand-track" id="brandTrack"></div>
+      <button class="brand-nav brand-prev" id="brandPrev" aria-label="Previous slide">&#8249;</button>
+      <button class="brand-nav brand-next" id="brandNext" aria-label="Next slide">&#8250;</button>
+    </div>
+    <span class="brand-counter" id="brandCounter" aria-live="polite"></span>
+  </section>
+
+  <!-- ── SOCIAL MEDIA BANNERS ── -->
+  <section class="banners-section">
+    <div class="sec-head reveal">
+      <h2><b>Social</b> Media<br>Banners</h2>
+      <p>These banners were created for X, Telegram, and Discord to support community awareness, product updates, and key announcements. The visual direction focused on keeping the communication clear, quick to consume, and aligned with the brand's metaverse-led personality. Each banner was designed to inform the community while maintaining a sense of energy, curiosity, and consistency across platforms.</p>
+    </div>
+
+    <div class="banner-strip reveal" id="bannerStrip">
+      <img src="ma-assets/strip-1.jpg" alt="Meme. Match. Maavi — love farming airdrop banner" />
+      <img src="ma-assets/strip-2.jpg" alt="Date Night Done Right banner" />
+      <img src="ma-assets/strip-3.jpg" alt="Express yourself avatar customisation banner" />
+      <img src="ma-assets/strip-4.jpg" alt="Ambassador Program Season 3 banner" />
+      <img src="ma-assets/strip-5.jpg" alt="MaAvatar social banner 5" />
+      <img src="ma-assets/strip-6.jpg" alt="MaAvatar social banner 6" />
+      <img src="ma-assets/strip-7.jpg" alt="MaAvatar social banner 7" />
+      <img src="ma-assets/strip-8.jpg" alt="MaAvatar social banner 8" />
+      <img src="ma-assets/strip-9.jpg" alt="MaAvatar social banner 9" />
+      <img src="ma-assets/strip-10.jpg" alt="MaAvatar social banner 10" />
+      <img src="ma-assets/strip-11.jpg" alt="MaAvatar social banner 11" />
+      <img src="ma-assets/strip-12.jpg" alt="MaAvatar social banner 12" />
+    </div>
+
+    <div class="banner-grid">
+      <img class="reveal" src="ma-assets/wide-r1-left.jpg" alt="Operation Whitelist banner" />
+      <img class="reveal" src="ma-assets/wide-r1-right.jpg" alt="Blurred faces, real stakes banner" />
+      <img class="reveal" src="ma-assets/wide-r2-left.jpg" alt="40M $MAAVI airdrop banner" />
+      <img class="reveal" src="ma-assets/wide-r2-right.jpg" alt="MaAvatar × AngelPoop partnership announcement banner" />
+      <img class="reveal" src="ma-assets/wide-r3-left.jpg" alt="Liquidity meets love banner" />
+      <img class="reveal" src="ma-assets/wide-r3-right.jpg" alt="Rings fade, tokens moon banner" />
+      <img class="reveal" src="ma-assets/wide-r4-left.jpg" alt="Love Cult roles banner" />
+      <img class="reveal" src="ma-assets/wide-r4-right.jpg" alt="Token2049 × MaAvatar mega giveaway banner" />
+      <img class="reveal" src="ma-assets/wide-r5-left.jpg" alt="Maavi thread contest banner" />
+      <img class="reveal" src="ma-assets/wide-r5-right.jpg" alt="MaAvatar 3D typography banner" />
+      <img class="reveal" src="ma-assets/wide-r6-left.jpg" alt="Ambassador Program season 4 banner" />
+      <img class="reveal" src="ma-assets/wide-r6-right.jpg" alt="AMA is live banner" />
+    </div>
+  </section>
+
+  <!-- ── CAROUSELS ── -->
+  <section class="carousels-section">
+    <div class="sec-head reveal">
+      <h2><b>Carousels</b></h2>
+      <p>The carousel posts were designed as lighthearted yet informative pieces to address current dating and digital interaction problems. Through playful visuals, simple storytelling, and awareness-led messaging, the posts introduced users to MaAvatar's world and positioned the product as a fresh way to connect, interact, and build relationships in a virtual space.</p>
+    </div>
+
+    <div class="carousel-rows" id="carouselRows"></div>
+  </section>
+
+  <!-- ── CHARACTER DESIGN ── -->
+  <section class="character-section">
+    <div class="sec-head reveal">
+      <h2>Character<br><b>Design</b></h2>
+      <p>The mascot design showcase presents the initial sketches, explorations, and final direction for Maavi, the game mascot. The process involved experimenting with form, personality, costume, and expression to create a character that felt friendly, memorable, and connected to the brand's virtual dating universe.</p>
+    </div>
+
+    <div class="char-cards">
+      <img class="reveal" src="ma-assets/char-1.png" alt="Maavi mascot exploration sketch sheet" />
+      <img class="reveal" src="ma-assets/char-2.png" alt="Maavi character three-view turnaround sketch" />
+      <div class="char-pair">
+        <img class="reveal" src="ma-assets/char-3.png" alt="Maavi costume sketch — pencil study" />
+        <img class="reveal" src="ma-assets/char-4.png" alt="Maavi costume sketch — coloured concept" />
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── MERCHANDISE DESIGN — pinned horizontal scroll ── -->
+<div class="merch-scroll-container" id="merchScrollContainer">
+  <section class="merch-pin" id="merchPin">
+    <div class="sec-head merch-head">
+      <h2><b>Merchandise</b><br>Design</h2>
+      <p>The merchandise designs were created as community giveaway concepts to extend the brand beyond the digital platform. These pieces helped translate MaAvatar's identity into tangible touchpoints, making the community experience more engaging, collectible, and brand-driven.</p>
+    </div>
+
+    <div class="merch-track" id="merchTrack">
+      <img src="ma-assets/hoodie-1.jpg" alt="MaAvatar hoodie — environment grid print" />
+      <img src="ma-assets/hoodie-2.jpg" alt="MaAvatar hoodie — Maavi character print" />
+      <img src="ma-assets/hoodie-3.jpg" alt="MaAvatar hoodie — virtual avatar print" />
+      <img src="ma-assets/hoodie-4.jpg" alt="MaAvatar hoodie concept 4" />
+      <img src="ma-assets/hoodie-5.jpg" alt="MaAvatar hoodie concept 5" />
+      <img src="ma-assets/hoodie-6.jpg" alt="MaAvatar hoodie concept 6" />
+      <img src="ma-assets/hoodie-7.jpg" alt="MaAvatar hoodie concept 7" />
+      <img src="ma-assets/hoodie-8.jpg" alt="MaAvatar hoodie concept 8" />
+      <img src="ma-assets/hoodie-9.jpg" alt="MaAvatar hoodie concept 9" />
+      <img src="ma-assets/hoodie-10.jpg" alt="MaAvatar hoodie concept 10" />
+      <img src="ma-assets/hoodie-11.jpg" alt="MaAvatar hoodie concept 11" />
+      <img src="ma-assets/hoodie-12.jpg" alt="MaAvatar hoodie concept 12" />
+    </div>
+  </section>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="credits-footer">
+  <div class="wrap">
+    <h2>Credits</h2>
+    <p class="credits-body">Thank you to the MaAvatar team for trusting me with such a wide and evolving creative role. Working in a start-up environment gave me the freedom to collaborate across marketing, art, UI/UX, motion, and brand strategy while learning how every decision shapes a product at its early stage. I am grateful to the founders, teammates, artists, and designers who made the process collaborative, experimental, and full of learning. This project gave me the space to explore ideas beyond one design role and contribute to a world that was still being built from scratch.</p>
+
+    <span class="view-another">VIEW ANOTHER PROJECT</span>
+
+    <ul class="project-rows">
+      <li><a href="oichi.html"><span class="row-name">Oichii-The Ramen Bar</span><span class="row-alt" aria-hidden="true">Brand Identity &amp; Visual Experience Design</span></a></li>
+      <li><a href="ministry.html"><span class="row-name">Ministry of Commerce and Industry</span><span class="row-alt" aria-hidden="true">Editorial &amp; Marketing Design</span></a></li>
+      <li><a href="arista-vault.html"><span class="row-name">Arista Vault</span><span class="row-alt" aria-hidden="true">Social Media &amp; Brand Communication Design</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ── Carousel posts: each row is a carousel (4 visible, arrows step by one) ── */
+  (function buildRowCarousels() {
+    const ROWS = [
+      { label: 'Top 5 places to chill in MaAvatar',
+        slides: ['carousel-2', 'carousel-3', 'carousel-4', 'cr1-5', 'cr1-6', 'carousel-1'] },
+      { label: '$MAAVI token',
+        slides: ['carousel-5', 'carousel-6', 'carousel-7', 'carousel-8', 'cr2-5', 'cr2-6'] },
+      { label: 'Dating problems MaAvatar solves',
+        slides: ['carousel-9', 'carousel-10', 'carousel-11', 'carousel-12', 'cr3-5', 'cr3-6', 'cr3-7'] },
+      { label: 'MaAvatar is your safe space',
+        slides: ['carousel-13', 'carousel-14', 'carousel-15', 'carousel-16', 'cr4-5'] },
+    ];
+
+    const VISIBLE = 4;
+    const rowsBox = document.getElementById('carouselRows');
+    const mobile  = window.matchMedia('(max-width: 760px)');
+    const rows    = [];
+
+    ROWS.forEach((def, r) => {
+      const row = document.createElement('div');
+      row.className = 'post-row reveal';
+
+      const track = document.createElement('div');
+      track.className = 'post-track';
+
+      def.slides.forEach((name, i) => {
+        const img = document.createElement('img');
+        img.src = 'ma-assets/' + name + '.jpg';
+        img.alt = def.label + ' — slide ' + (i + 1) + ' of ' + def.slides.length;
+        track.appendChild(img);
+      });
+
+      const prev = document.createElement('button');
+      prev.className = 'post-nav post-prev';
+      prev.setAttribute('aria-label', 'Previous posts');
+      prev.innerHTML = '&#8249;';
+
+      const next = document.createElement('button');
+      next.className = 'post-nav post-next';
+      next.setAttribute('aria-label', 'More posts');
+      next.innerHTML = '&#8250;';
+
+      row.appendChild(track);
+      row.appendChild(prev);
+      row.appendChild(next);
+      rowsBox.appendChild(row);
+      revealObserver.observe(row);
+
+      const state = { track, prev, next, index: 0, max: Math.max(0, def.slides.length - VISIBLE) };
+      rows.push(state);
+
+      function render() {
+        if (mobile.matches) {
+          track.style.transform = '';
+        } else {
+          const card = track.children[0];
+          const gap  = parseFloat(getComputedStyle(track).columnGap) || 0;
+          const step = card.getBoundingClientRect().width + gap;
+          track.style.transform = 'translateX(' + (-state.index * step) + 'px)';
+        }
+        prev.classList.toggle('hidden', state.index === 0);
+        next.classList.toggle('hidden', state.index >= state.max);
+      }
+
+      state.render = render;
+      prev.addEventListener('click', () => { state.index = Math.max(0, state.index - 1); render(); });
+      next.addEventListener('click', () => { state.index = Math.min(state.max, state.index + 1); render(); });
+      render();
+    });
+
+    window.addEventListener('resize', () => rows.forEach(s => s.render()));
+    mobile.addEventListener('change', () => rows.forEach(s => { s.index = 0; s.render(); }));
+  })();
+
+  /* ── Brand Guide carousel (same slides as home Brand Book) ── */
+  (function brandCarousel() {
+    const slides = [120, 121, 122, 123, 124, 125, 126, 127, 129, 130, 131, 132,
+                    133, 134, 135, 136, 137, 138, 139, 140, 141, 142]
+      .map(n => 'brand-book/Property 1=Frame ' + n + '.svg');
+
+    const track   = document.getElementById('brandTrack');
+    const prevBtn = document.getElementById('brandPrev');
+    const nextBtn = document.getElementById('brandNext');
+    const counter = document.getElementById('brandCounter');
+
+    let index = 0;
+
+    slides.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'MaAvatar brand guide — slide ' + (i + 1) + ' of ' + slides.length;
+      if (i > 1) img.loading = 'lazy';
+      track.appendChild(img);
+    });
+
+    function render() {
+      track.style.transform = 'translateX(' + (-index * 100) + '%)';
+      prevBtn.classList.toggle('hidden', index === 0);
+      nextBtn.classList.toggle('hidden', index === slides.length - 1);
+      counter.textContent = (index + 1) + ' / ' + slides.length;
+    }
+
+    function slide(dir) {
+      const target = index + dir;
+      if (target < 0 || target >= slides.length) return;
+      index = target;
+      render();
+    }
+
+    prevBtn.addEventListener('click', () => slide(-1));
+    nextBtn.addEventListener('click', () => slide(1));
+    render();
+  })();
+
+  /* ══════════════════════════════════════════
+     MERCHANDISE — pinned horizontal scroll
+     (section sticks while scroll progress drives the
+      strip's translateX; vertical scrolling resumes
+      once the strip has fully passed)
+  ══════════════════════════════════════════ */
+  (function pinnedHorizontal() {
+    const container = document.getElementById('merchScrollContainer');
+    const pin       = document.getElementById('merchPin');
+    const track     = document.getElementById('merchTrack');
+    const mobile    = window.matchMedia('(max-width: 760px)');
+
+    let maxShift = 0;
+    let ticking  = false;
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function size() {
+      if (mobile.matches) {
+        container.style.height = 'auto';
+        track.style.transform = '';
+        return;
+      }
+      maxShift = Math.max(0, track.scrollWidth - pin.clientWidth);
+      container.style.height = (window.innerHeight + maxShift) + 'px';
+      update();
+    }
+
+    function update() {
+      if (mobile.matches) return;
+      const range = container.offsetHeight - window.innerHeight;
+      if (range <= 0) return;
+      const p = clamp((window.scrollY - container.offsetTop) / range, 0, 1);
+      track.style.transform = 'translateX(' + (-p * maxShift) + 'px)';
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { update(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', size);
+    window.addEventListener('load', size);
+    mobile.addEventListener('change', size);
+    size();
+  })();
+
+  /* ── Banner strip: drag to scroll ── */
+  (function dragScroll() {
+    const strip = document.getElementById('bannerStrip');
+    let down = false, startX = 0, startScroll = 0;
+
+    strip.addEventListener('pointerdown', (e) => {
+      down = true;
+      startX = e.clientX;
+      startScroll = strip.scrollLeft;
+      strip.classList.add('dragging');
+      strip.setPointerCapture(e.pointerId);
+    });
+
+    strip.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      strip.scrollLeft = startScroll - (e.clientX - startX);
+    });
+
+    ['pointerup', 'pointercancel'].forEach(ev =>
+      strip.addEventListener(ev, () => {
+        down = false;
+        strip.classList.remove('dragging');
+      }));
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ministry of Commerce and Industry | Portfolio 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #0060CE;
+      --yellow: #FFEF28;
+      --ink:    #1c1c1c;
+      --card-radius: 41px;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    img { display: block; }
+
+    /* Film-grain overlay (design uses a Figma noise filter) */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0.11;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ══════════════════════════════════════════
+       TOP NAV — same yellow bar as home page
+    ══════════════════════════════════════════ */
+    .top-nav {
+      background: var(--yellow);
+      border: 1.3px solid var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2.5rem;
+      margin: 40px 40px 0 40px;
+      border-radius: 16px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .top-nav .logo img { height: 30px; display: block; }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .top-nav .nav-links a {
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: #111;
+      text-decoration: none;
+    }
+
+    .top-nav .btn-contact {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+    }
+
+    /* ══════════════════════════════════════════
+       LAYOUT HELPERS
+    ══════════════════════════════════════════ */
+    .wrap {
+      width: calc(100% - 80px);
+      max-width: 1376px;
+      margin-inline: auto;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: 42% 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .sec-head h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      line-height: 1.15;
+      color: #000;
+    }
+
+    .sec-head p {
+      font-size: clamp(0.8rem, 0.95vw, 0.9rem);
+      line-height: 1.6;
+      color: #2c2c2c;
+      padding-top: 0.5em;
+      max-width: 46rem;
+    }
+
+    /* ══════════════════════════════════════════
+       HERO — newspaper photo card
+    ══════════════════════════════════════════ */
+    .hero-card { margin-top: 70px; }
+
+    .hero-card img {
+      width: 100%;
+      aspect-ratio: 1384 / 778;
+      object-fit: cover;
+      border-radius: var(--card-radius);
+    }
+
+    /* ══════════════════════════════════════════
+       INTRO — G20 logo + paragraph
+    ══════════════════════════════════════════ */
+    .intro {
+      margin-top: 134px;
+      display: grid;
+      grid-template-columns: minmax(220px, 347px) 1fr;
+      gap: clamp(2rem, 15vw, 225px);
+      align-items: center;
+    }
+
+    .intro img { width: 100%; height: auto; }
+
+    .intro p {
+      font-size: clamp(0.82rem, 0.98vw, 0.94rem);
+      line-height: 1.6;
+      max-width: 49rem;
+    }
+
+    /* ══════════════════════════════════════════
+       CHALLENGE / OUTCOME / DELIVERED / YEAR
+    ══════════════════════════════════════════ */
+    .info-grid {
+      margin-top: 110px;
+      padding: 0 3.5%;
+      display: grid;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.5fr;
+      gap: clamp(2rem, 4vw, 60px);
+    }
+
+    .info-grid h3 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1rem, 1.3vw, 1.25rem);
+      color: #000;
+      margin-bottom: 1.1rem;
+    }
+
+    .info-grid p, .info-grid li {
+      font-size: clamp(0.74rem, 0.85vw, 0.82rem);
+      line-height: 1.6;
+      color: #3d3d3d;
+    }
+
+    .info-grid ul { list-style: none; }
+
+    /* ══════════════════════════════════════════
+       SOCIAL MEDIA — pinned horizontal scroll
+    ══════════════════════════════════════════ */
+    .social-scroll-container {
+      position: relative;
+      margin-top: 60px;
+      /* height set by JS: 100vh + horizontal overshoot */
+    }
+
+    .social-pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(2rem, 5vh, 56px);
+    }
+
+    .social-pin h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      color: #000;
+      padding-left: max(40px, calc((100vw - 1376px) / 2));
+    }
+
+    .social-track {
+      display: flex;
+      gap: clamp(1rem, 2.75vw, 42px);
+      padding-left: max(40px, calc((100vw - 1376px) / 2));
+      padding-right: 40px;
+      will-change: transform;
+      width: max-content;
+    }
+
+    .social-track img {
+      width: clamp(240px, 26.5vw, 408px);
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════════════════
+       PHOTO CARDS / SECTIONS
+    ══════════════════════════════════════════ */
+    .newsletter-section { margin-top: 70px; }
+
+    .reading-card {
+      display: block;
+      margin: 76px auto 0;
+      width: 96.4%;
+      aspect-ratio: 1326 / 632;
+      object-fit: cover;
+      border-radius: var(--card-radius);
+    }
+
+    .spread-img {
+      margin-top: 60px;
+      width: 100%;
+      height: auto;
+    }
+
+    .covers3-img {
+      margin-top: 56px;
+      width: 100%;
+      height: auto;
+    }
+
+    .book-section { margin-top: 120px; }
+
+    .photo-card {
+      margin-top: 76px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: var(--card-radius);
+    }
+
+    .book-cover-img   { aspect-ratio: 1376 / 704; }
+    .book-spreads-img { aspect-ratio: 1376 / 774; margin-top: 84px; }
+
+    .calendar-section { margin-top: 120px; }
+
+    .calendar-photo-img { aspect-ratio: 1376 / 832; }
+
+    /* Calendar pages grid on grey card */
+    .calendar-grid-card {
+      margin-top: 84px;
+      background: #D9D9D9;
+      border-radius: var(--card-radius);
+      padding: 3% 2%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.9vw;
+    }
+
+    .cal-row {
+      display: flex;
+      justify-content: center;
+      gap: 2%;
+    }
+
+    .cal-row img {
+      width: 16.35%;
+      aspect-ratio: 225 / 338;
+      object-fit: cover;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    /* ══════════════════════════════════════════
+       FOOTER — credits + other projects
+    ══════════════════════════════════════════ */
+    .credits-footer {
+      margin-top: 85px;
+      background: var(--blue);
+      padding-top: 80px;
+    }
+
+    .credits-footer h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 2.7vw, 2.6rem);
+      color: var(--yellow);
+    }
+
+    .credits-footer .credits-body {
+      margin-top: 28px;
+      max-width: 830px;
+      color: #fff;
+      font-size: clamp(0.8rem, 0.95vw, 0.92rem);
+      line-height: 1.65;
+    }
+
+    .view-another {
+      display: inline-block;
+      margin-top: 56px;
+      color: var(--yellow);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+
+    .project-rows {
+      margin-top: 26px;
+      list-style: none;
+    }
+
+    .project-rows a {
+      display: grid;
+      border-top: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 42px 0 42px 14px;
+      color: #fff;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3.4vw, 3.25rem);
+      line-height: 1.1;
+      text-decoration: none;
+      transition: padding-left 0.3s ease, color 0.3s ease;
+    }
+
+    .project-rows a > span {
+      grid-area: 1 / 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-rows a .row-alt { opacity: 0; transform: translateY(8px); }
+
+    .project-rows a:hover {
+      padding-left: 34px;
+      color: var(--yellow);
+    }
+
+    .project-rows a:hover .row-name { opacity: 0; transform: translateY(-8px); }
+    .project-rows a:hover .row-alt  { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 760px) {
+      .top-nav { margin: 16px 16px 0; padding: 0.65rem 1.2rem; }
+      .top-nav .nav-links { gap: 1.2rem; }
+      .wrap { width: calc(100% - 32px); }
+      .hero-card { margin-top: 32px; }
+      .hero-card img { border-radius: 22px; }
+      .intro { grid-template-columns: 1fr; gap: 1.6rem; margin-top: 56px; }
+      .intro img { max-width: 240px; }
+      .info-grid { grid-template-columns: 1fr 1fr; margin-top: 56px; padding: 0; }
+      .sec-head { grid-template-columns: 1fr; gap: 1.2rem; }
+
+      /* Horizontal section becomes a plain swipe strip */
+      .social-scroll-container { height: auto !important; margin-top: 64px; }
+      .social-pin {
+        position: static;
+        height: auto;
+        overflow: visible;
+        gap: 1.6rem;
+      }
+      .social-pin h2 { padding-left: 16px; }
+      .social-track {
+        transform: none !important;
+        width: auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .social-track::-webkit-scrollbar { display: none; }
+
+      .newsletter-section, .book-section, .calendar-section { margin-top: 64px; }
+      .reading-card { width: 100%; margin-top: 36px; border-radius: 22px; }
+      .photo-card { margin-top: 36px; border-radius: 22px; }
+      .calendar-grid-card { border-radius: 22px; }
+      .credits-footer { padding-top: 48px; margin-top: 56px; }
+      .project-rows a { padding: 26px 0 26px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <a class="logo" href="index.html"><img src="logo.svg" alt="Logo" /></a>
+  <div class="nav-links">
+    <a href="index.html">About</a>
+    <a href="index.html#workSection">Work</a>
+    <a href="index.html#contactSection" class="btn-contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="wrap">
+    <!-- ── HERO ── -->
+    <section class="hero-card reveal">
+      <img src="mi-assets/hero.jpg" alt="Newspaper spread with the VANIJYA newsletter, Edition 1" />
+    </section>
+
+    <!-- ── INTRO ── -->
+    <section class="intro reveal">
+      <img src="mi-assets/g20-logo.png" alt="G20 Bharat 2023 India logo" />
+      <p>I served in the Communication Department of the Department of Commerce and Industry, specializing as a Design Specialist. Within this role, I crafted creatives for social media platforms, encompassing curtain-raiser posts, countdown posts, and event announcements. The next slide will provide an in-depth look at my design portfolio.</p>
+    </section>
+
+    <!-- ── CHALLENGE / OUTCOME / DELIVERED / YEAR ── -->
+    <section class="info-grid reveal">
+      <div>
+        <h3>The Challenge</h3>
+        <p>As the Communication Department was still taking shape, the challenge was to help build a clear and consistent visual language for the Ministry's public-facing communication. The work required designing across multiple formats, from social media updates and newsletters to presentations, publications, and G20-related communication, while keeping the tone formal, informative, and accessible.</p>
+      </div>
+      <div>
+        <h3>The Outcome</h3>
+        <p>A structured communication system was developed through regular design support for weekly newsletters, monthly review presentations, social media creatives, event announcements, calendars, and key publications like the 9 Year Achievement Book. The experience helped create organised, timely, and visually consistent communication for both internal reviews and public outreach during an important year for the Ministry.</p>
+      </div>
+      <div>
+        <h3>Delivered</h3>
+        <ul>
+          <li>Publication Design</li>
+          <li>Social Media Creatives</li>
+          <li>Weekly Newsletters</li>
+          <li>Monthly Communication Presentations</li>
+          <li>9 Year Achievement Book</li>
+          <li>Calendar Design</li>
+          <li>G20 Communication Collaterals</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Year</h3>
+        <p>2023/24</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── SOCIAL MEDIA — pinned horizontal scroll ── -->
+  <div class="social-scroll-container" id="socialScrollContainer">
+    <section class="social-pin" id="socialPin">
+      <h2>Social Media</h2>
+      <div class="social-track" id="socialTrack">
+        <img src="mi-assets/social-1.png" alt="1 day to go — Trade and Investment Ministerial Meeting, Jaipur" />
+        <img src="mi-assets/social-2.png" alt="2 days to go — Trade and Investment Ministerial Meeting" />
+        <img src="mi-assets/social-3.png" alt="Jaipur illustrated welcome post" />
+        <img src="mi-assets/social-4.png" alt="Session 1 — Multilateral Trade for Global Growth and Prosperity" />
+        <img src="mi-assets/social-5.png" alt="Jaipur — 4th Trade and Investment Working Group Meeting" />
+        <img src="mi-assets/social-6.png" alt="Session 3 — Leveraging Technology for Paperless Trade" />
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <!-- ── NEWSLETTER ── -->
+    <section class="newsletter-section">
+      <div class="sec-head reveal">
+        <h2>Newsletter</h2>
+        <p>This newsletter was specifically designed for weekly news updates to be published on the website and for internal circulation. It was tailored for digital platforms and comprehensively covers international commerce news.</p>
+      </div>
+
+      <img class="reading-card reveal" src="mi-assets/reading.jpg" alt="Reading the VANIJYA newsletter at a desk" />
+      <img class="spread-img reveal" src="mi-assets/spread.jpg" alt="VANIJYA newsletter inner news spread" />
+      <img class="covers3-img reveal" src="mi-assets/covers3.jpg" alt="VANIJYA Edition 2 cover, content page, and India-centric news page" />
+    </section>
+
+    <!-- ── BOOK ── -->
+    <section class="book-section">
+      <div class="sec-head reveal">
+        <h2>Book</h2>
+        <p>This 58-page, 9-year achievement booklet was meticulously designed for the Department of Commerce. It comprehensively showcases all the milestones attained since the ministry's inception, featuring statistical data and export metrics to underscore our accomplishments.</p>
+      </div>
+
+      <img class="photo-card book-cover-img reveal" src="mi-assets/book-cover.jpg" alt="9 Years of Achievements book — Trade for Growth and Prosperity cover" />
+      <img class="photo-card book-spreads-img reveal" src="mi-assets/book-spreads.jpg" alt="Achievement book inner spreads mockup" />
+    </section>
+
+    <!-- ── CALENDAR ── -->
+    <section class="calendar-section">
+      <div class="sec-head reveal">
+        <h2>Calendar</h2>
+        <p>This 2024 calendar was curated for the Government of India, focusing on showcasing various departments of commerce through captivating photographs. The primary directive was to allocate maximum space for imagery while minimizing content.</p>
+      </div>
+
+      <img class="photo-card calendar-photo-img reveal" src="mi-assets/calendar-photo.jpg" alt="2024 wall calendar — July page" />
+
+      <div class="calendar-grid-card reveal">
+        <div class="cal-row">
+          <img src="mi-assets/cal-1.jpg" alt="Calendar 2024 cover" />
+          <img src="mi-assets/cal-2.jpg" alt="Calendar — January" />
+          <img src="mi-assets/cal-3.jpg" alt="Calendar — February" />
+          <img src="mi-assets/cal-4.jpg" alt="Calendar — March" />
+          <img src="mi-assets/cal-5.jpg" alt="Calendar — April" />
+        </div>
+        <div class="cal-row">
+          <img src="mi-assets/cal-6.jpg" alt="Calendar — May" />
+          <img src="mi-assets/cal-7.jpg" alt="Calendar — June" />
+          <img src="mi-assets/cal-8.jpg" alt="Calendar — July" />
+          <img src="mi-assets/cal-9.jpg" alt="Calendar — August" />
+        </div>
+        <div class="cal-row">
+          <img src="mi-assets/cal-10.jpg" alt="Calendar — September" />
+          <img src="mi-assets/cal-11.jpg" alt="Calendar — October" />
+          <img src="mi-assets/cal-12.jpg" alt="Calendar — November" />
+          <img src="mi-assets/cal-13.jpg" alt="Calendar — December" />
+          <img src="mi-assets/cal-14.jpg" alt="Calendar — back page" />
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="credits-footer">
+  <div class="wrap">
+    <h2>Credits</h2>
+    <p class="credits-body">I am thankful to the officers, ministers, and the Communication Department for giving me the opportunity to contribute within such a structured and professional environment. Working with the Ministry gave me valuable insight into how a government organisation functions, and the sense of responsibility that comes with designing for it. The experience helped me understand how communication, discipline, and attention to detail shape public-facing work. It also opened my perspective toward working with different kinds of clients, where every expectation carries its own context, purpose, and importance.</p>
+
+    <span class="view-another">VIEW ANOTHER PROJECT</span>
+
+    <ul class="project-rows">
+      <li><a href="oichi.html"><span class="row-name">Oichii-The Ramen Bar</span><span class="row-alt" aria-hidden="true">Brand Identity &amp; Visual Experience Design</span></a></li>
+      <li><a href="maavatar.html"><span class="row-name">MaAvatar</span><span class="row-alt" aria-hidden="true">Brand, Marketing &amp; Visual Design</span></a></li>
+      <li><a href="arista-vault.html"><span class="row-name">Arista Vault</span><span class="row-alt" aria-hidden="true">Social Media &amp; Brand Communication Design</span></a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  /* ── Scroll reveal ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ══════════════════════════════════════════
+     SOCIAL MEDIA — pinned horizontal scroll
+     (same mechanic as the home page Process section:
+      the section sticks while scroll progress drives
+      the strip's translateX; vertical scrolling resumes
+      once the strip has fully passed)
+  ══════════════════════════════════════════ */
+  (function pinnedHorizontal() {
+    const container = document.getElementById('socialScrollContainer');
+    const pin       = document.getElementById('socialPin');
+    const track     = document.getElementById('socialTrack');
+    const mobile    = window.matchMedia('(max-width: 760px)');
+
+    let maxShift = 0;
+    let ticking  = false;
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function size() {
+      if (mobile.matches) {
+        container.style.height = 'auto';
+        track.style.transform = '';
+        return;
+      }
+      maxShift = Math.max(0, track.scrollWidth - pin.clientWidth);
+      container.style.height = (window.innerHeight + maxShift) + 'px';
+      update();
+    }
+
+    function update() {
+      if (mobile.matches) return;
+      const range = container.offsetHeight - window.innerHeight;
+      if (range <= 0) return;
+      const p = clamp((window.scrollY - container.offsetTop) / range, 0, 1);
+      track.style.transform = 'translateX(' + (-p * maxShift) + 'px)';
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { update(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', size);
+    window.addEventListener('load', size);
+    mobile.addEventListener('change', size);
+    size();
+  })();
+</script>
+
+</body>
+</html>
