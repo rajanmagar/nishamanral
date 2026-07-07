@@ -273,17 +273,20 @@
        SECTION 2 — ABOUT (native HTML/CSS)
     ══════════════════════════════════════════ */
     .about-section {
-      height: calc(100vh - 101px);
+      height: calc(100vh - 160px);
       min-height: 620px;
       background: #fff;
       border: 1.3px solid var(--blue);
       border-radius: var(--card-radius);
       overflow: hidden;
       padding: clamp(1.4rem, 3.2vh, 2.6rem) clamp(1.6rem, 3vw, 3rem);
+      /* center the content group vertically — equal space top & bottom */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .about-grid {
-      height: 100%;
       display: grid;
       grid-template-columns: 53% 1fr;
     }
@@ -323,7 +326,7 @@
 
     /* ── Experience card (designed SVG export) ── */
     .exp-card {
-      margin-top: auto;
+      margin-top: clamp(2rem, 6vh, 4rem);
       width: 100%;
       height: auto;
       display: block;
@@ -353,9 +356,9 @@
 
     /* ── Photo + skills ── */
     .about-lower {
-      margin-top: auto;
+      margin-top: clamp(1.5rem, 4vh, 3rem);
       display: grid;
-      grid-template-columns: 68% 1fr;
+      grid-template-columns: 62% 1fr;
       align-items: end;
       min-height: 0;
     }
@@ -1021,6 +1024,11 @@
       transition: transform 0.4s cubic-bezier(0.3, 0, 0.2, 1);
       will-change: transform;
     }
+
+    /* Social post: no transition — slides swap instantly so the dots/arrows
+       baked into the artwork appear to stay put while the photo changes.
+       (Brand book keeps its slide animation.) */
+    .social-post .social-track { transition: none; }
 
     .social-slide {
       width: 100%;
@@ -1725,7 +1733,10 @@
     return [
       0,                                              // Hero state 1
       viewH,                                          // Hero state 2 (animated)
-      aboutSection.getBoundingClientRect().top + window.scrollY - 80, // About
+      // centre About: equal space above & below at any height (min-height can make
+      // it taller than viewH-160 on short screens, so a fixed -80 would starve the bottom)
+      aboutSection.getBoundingClientRect().top + window.scrollY
+        - (viewH - aboutSection.offsetHeight) / 2, // About
       workSection.getBoundingClientRect().top + window.scrollY - 80,  // Work
     ].concat(
       // Process: 4 stops, one per step reveal
