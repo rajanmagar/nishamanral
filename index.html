@@ -819,6 +819,84 @@
 
     .btn-get-in-touch:hover { transform: translateY(-3px); }
 
+    /* ── Get-in-touch contact popup (see popup.svg) ── */
+    .contact-card {
+      position: relative;
+      width: min(94vw, 620px);
+      background: #F4E538;
+      border: 2px solid #0060CE;
+      border-radius: 36px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.94);
+      transition: transform 0.3s ease;
+    }
+
+    .book-modal.open .contact-card { transform: scale(1); }
+
+    .contact-email {
+      display: block;
+      text-align: center;
+      color: #0060CE;
+      font-weight: 700;
+      font-size: clamp(1.05rem, 3.5vw, 2.3rem);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      padding: clamp(1.4rem, 4vw, 1rem) 0rem;
+      white-space: nowrap;
+    }
+
+    .contact-div { border-top: 2px solid #0060CE; width: 100%; }
+
+    .contact-btns {
+      display: flex;
+      gap: clamp(0.6rem, 2vw, 1rem);
+      flex-wrap: wrap;
+      padding: clamp(1.4rem, 4vw, 4rem) clamp(1.1rem, 4vw, 4rem);
+    }
+
+    .contact-btn {
+      flex: 1 1 220px;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      border-radius: 9px;
+      padding: 0.75rem 1.1rem;
+      color: #fff;
+      font-weight: 700;
+      font-size: clamp(1rem, 2.6vw, 1.35rem);
+      text-decoration: none;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .contact-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+    .cbtn-li { background: #0B63BD; }
+    .cbtn-be { background: #1D70FA; }
+
+    .cbtn-ic {
+      flex-shrink: 0;
+      width: clamp(30px, 8vw, 42px);
+      height: clamp(30px, 8vw, 42px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cbtn-ic svg { width: 100%; height: 100%; display: block; }
+
+    .cbtn-be-mark {
+      font-weight: 800;
+      font-size: clamp(1.3rem, 3.6vw, 1.9rem);
+      line-height: 1;
+    }
+
+
+    @media (max-width: 520px) {
+      .contact-btns { flex-direction: column; }
+      .contact-btn { flex: 1 1 auto; }
+    }
+
     /* ══════════════════════════════════════════
        MENU FLIPBOOK MODAL
     ══════════════════════════════════════════ */
@@ -1017,6 +1095,9 @@
       overflow: hidden;
       background: #000;
     }
+
+    /* social post navigates by tapping the photo (no arrow buttons) */
+    .social-modal .social-carousel { cursor: pointer; }
 
     .social-track {
       display: flex;
@@ -1294,8 +1375,8 @@
   <a class="logo" href="#"><img src="logo.svg" alt="Logo" /></a>
   <div class="nav-links">
     <a href="#aboutSection">About</a>
-    <a href="./oichi.html">Work</a>
-    <a href="#workSection" class="btn-contact">Contact</a>
+    <a href="#workSection">Work</a>
+    <a href="#contactSection" class="btn-contact">Contact</a>
   </div>
 </nav>
 
@@ -1530,8 +1611,26 @@
     <p class="contact-sub">Ready to bring your creative vision to life? Let's collaborate and create something amazing.</p>
   </div>
   <div class="contact-divider"></div>
-  <a class="btn-get-in-touch" href="#">Get in Touch</a>
+  <a class="btn-get-in-touch" id="getInTouchBtn" href="#">Get in Touch</a>
 </footer>
+
+<!-- ── GET IN TOUCH POPUP ── -->
+<div class="book-modal contact-modal" id="contactModal" role="dialog" aria-modal="true" aria-label="Contact Nisha">
+  <div class="contact-card">
+    <a class="contact-email" href="mailto:nishamanral007@gmail.com">nishamanral007@gmail.com</a>
+    <div class="contact-div"></div>
+    <div class="contact-btns">
+      <a class="contact-btn cbtn-li" href="https://www.linkedin.com/in/nishamanral" target="_blank" rel="noopener">
+        <span class="cbtn-ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.28 8.06h4.4V24H.28V8.06Zm7.02 0h4.22v2.18h.06c.59-1.11 2.03-2.28 4.18-2.28 4.47 0 5.3 2.94 5.3 6.77V24h-4.4v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V24H7.3V8.06Z"/></svg>
+        </span>/nishamanral
+      </a>
+      <a class="contact-btn cbtn-be" href="https://www.behance.net/nishahaha" target="_blank" rel="noopener">
+        <span class="cbtn-ic cbtn-be-mark" aria-hidden="true">Bē</span>/nishahaha
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      FLIPBOOK MODALS (menu + photography)
@@ -1616,7 +1715,6 @@
 
 <div class="book-modal social-modal" id="socialModal" role="dialog" aria-modal="true" aria-label="Instagram post">
   <button class="social-close" aria-label="Close post">&#10005;</button>
-  <button class="social-nav social-prev" id="socialPrev" aria-label="Previous image">&#8249;</button>
   <div class="social-post">
     <div class="social-carousel">
       <div class="social-track" id="socialTrack"></div>
@@ -1625,7 +1723,6 @@
       <img src="social-media/review.png" alt="Instagram review of OICHII The Ramen Bar" />
     </div>
   </div>
-  <button class="social-nav social-next" id="socialNext" aria-label="Next image">&#8250;</button>
 </div>
 
 <div class="book-modal brand-modal" id="brandModal" role="dialog" aria-modal="true" aria-label="Brand book slides">
@@ -2011,8 +2108,8 @@
 
     function render() {
       track.style.transform = 'translateX(' + (-index * 100) + '%)';
-      prevBtn.classList.toggle('hidden', index === 0);
-      nextBtn.classList.toggle('hidden', index === slides.length - 1);
+      if (prevBtn) prevBtn.classList.toggle('hidden', index === 0);
+      if (nextBtn) nextBtn.classList.toggle('hidden', index === slides.length - 1);
     }
 
     function slide(dir) {
@@ -2041,8 +2138,17 @@
     trigger.addEventListener('click', open);
     closeBtn.addEventListener('click', close);
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
-    prevBtn.addEventListener('click', () => slide(-1));
-    nextBtn.addEventListener('click', () => slide(1));
+    if (prevBtn) prevBtn.addEventListener('click', () => slide(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => slide(1));
+
+    // No arrow buttons → tap the image to navigate (left half = prev, right half = next)
+    if (!prevBtn && !nextBtn) {
+      const carousel = modal.querySelector('.social-carousel');
+      carousel.addEventListener('click', (e) => {
+        const r = carousel.getBoundingClientRect();
+        slide((e.clientX - r.left) < r.width / 2 ? -1 : 1);
+      });
+    }
 
     window.addEventListener('keydown', (e) => {
       if (!isOpen) return;
@@ -2067,6 +2173,21 @@
               133, 134, 135, 136, 137, 138, 139, 140, 141, 142]
       .map(n => 'brand-book/Property 1=Frame ' + n + '.svg'),
   });
+
+  /* ── Get in Touch popup ── */
+  (function contactPopup() {
+    const modal   = document.getElementById('contactModal');
+    const trigger = document.getElementById('getInTouchBtn');
+
+    function open(e) { if (e) e.preventDefault(); modal.classList.add('open'); bookOpen = true; modal.querySelector('.contact-email').focus(); }
+    function close() { modal.classList.remove('open'); bookOpen = false; trigger.focus(); }
+
+    trigger.addEventListener('click', open);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) { e.preventDefault(); close(); }
+    });
+  })();
 </script>
 
 </body>
